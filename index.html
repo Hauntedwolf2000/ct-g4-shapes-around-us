@@ -140,22 +140,23 @@ input[type=range]{width:100%;height:34px;margin:0;accent-color:var(--orange);dis
 .tara .eyes{transform-box:fill-box;transform-origin:center;animation:blink 4.2s infinite}
 @keyframes blink{0%,95%,100%{transform:scaleY(1)}97%{transform:scaleY(.12)}}
 #coach{position:absolute;inset:0;z-index:120;pointer-events:none}
-#coach .shade{position:absolute;inset:0;background:rgba(10,14,22,.74);opacity:0;transition:opacity .3s;pointer-events:auto}
-#coach.on .shade{opacity:1} #coach.off .shade{opacity:0}
+#coach .shade{position:absolute;inset:0;background:rgba(10,14,22,.74);pointer-events:auto}
+
 .tpng{width:100%;height:100%;object-fit:contain;display:block}
 .tface{width:170px;height:170px;max-width:none;margin:4px 0 0 -33px;display:block}
 .homerow .tbig{width:300px;height:354px}
-#coach .who{position:absolute;left:-30px;bottom:-262px;width:540px;height:540px;transform:translateX(-130%);filter:drop-shadow(0 10px 14px rgba(0,0,0,.35))}
-#coach .who svg{width:100%;height:100%;display:block}
+#coach .who{position:absolute;left:0;bottom:0;width:360px;height:262px;overflow:hidden;transform:translateX(-130%);filter:drop-shadow(0 10px 14px rgba(0,0,0,.35))}
+#coach .who img,#coach .who svg{width:440px;height:440px;max-width:none;margin-left:-60px;display:block}
 #coach.on .who{animation:sneak .6s ease-out forwards}
 #coach.on.idle .who{transform:none;animation:bob 3.2s ease-in-out infinite}
-#coach.off .who{animation:sneakOut .4s ease-in forwards}
+
 @keyframes sneak{0%{transform:translateX(-130%) rotate(-8deg)}60%{transform:translateX(-20%) rotate(4deg)}100%{transform:none}}
-@keyframes sneakOut{0%{transform:none}100%{transform:translateX(-140%) rotate(6deg)}}
+
 @keyframes bob{50%{transform:translateY(-8px)}}
 #stage.coaching .tools,#stage.coaching #foot>*{visibility:hidden}
-#coach .say{position:absolute;left:420px;bottom:40px;width:max-content;min-width:760px;max-width:1330px;min-height:150px;background:#fff;border:6px solid #24405f;border-radius:36px;padding:20px 30px;display:flex;align-items:center;gap:24px;pointer-events:auto;opacity:0;transform:scale(.85);transform-origin:0 100%;transition:opacity .2s,transform .25s cubic-bezier(.2,.9,.3,1.3)}
-#coach .say.show{opacity:1;transform:none}
+#coach .say:not(.show){display:none}
+#coach .say{position:absolute;left:400px;bottom:40px;width:max-content;min-width:760px;max-width:1330px;min-height:150px;background:#fff;border:6px solid #24405f;border-radius:36px;padding:20px 30px;display:flex;align-items:center;gap:24px;pointer-events:auto}
+#coach .say.show{display:flex}
 #coach .say::before{content:"";position:absolute;left:-34px;bottom:44px;border:20px solid transparent;border-left:0;border-right:30px solid #24405f}
 #coach .say::after{content:"";position:absolute;left:-22px;bottom:50px;border:14px solid transparent;border-left:0;border-right:22px solid #fff}
 #coach .nm{position:absolute;left:30px;top:-24px;background:var(--orange);color:#fff;font-weight:700;font-size:28px;line-height:34px;padding:4px 20px;border-radius:999px;border:4px solid #24405f;white-space:nowrap}
@@ -164,7 +165,7 @@ input[type=range]{width:100%;height:34px;margin:0;accent-color:var(--orange);dis
 #coach .nxt{flex:none;font:inherit;font-weight:700;font-size:32px;color:#fff;background:#e4572e;border:4px solid #d96a1c;border-radius:999px;padding:8px 30px;cursor:pointer;box-shadow:0 5px 0 #a93c1a;visibility:hidden;opacity:0;white-space:nowrap}
 #coach .nxt.ready{visibility:visible;opacity:1;animation:nudge 1.3s ease-in-out infinite}
 @keyframes nudge{50%{transform:translateX(6px)}}
-#coach .skip{position:absolute;right:34px;top:16px;font:inherit;font-weight:700;font-size:28px;height:64px;padding:0 26px;border-radius:999px;border:5px solid #fff;background:#e4572e;color:#fff;cursor:pointer;box-shadow:0 5px 0 rgba(0,0,0,.3);pointer-events:auto;white-space:nowrap}
+
 .cspot{position:relative;z-index:130;outline:7px solid #ffc93c;outline-offset:4px;animation:spot 1s ease-in-out infinite}
 @keyframes spot{50%{outline-color:#ff8a3d}}
 #hand{position:absolute;left:0;top:0;width:150px;height:150px;z-index:140;pointer-events:none;opacity:0}
@@ -381,12 +382,11 @@ try{ speechSynthesis.getVoices(); }catch(e){}
 const Coach={act:false,r:null,tm:0,
   play(lines,done){ this.stop(); Voice.stop(); this.act=true; this.done=done; hideHand(); const text=[].concat(lines).join(' ');
     const r=document.createElement('div'); r.id='coach';
-    r.innerHTML='<div class="shade"></div><div class="who">'+TARA_FULL+'</div><div class="say"><div class="nm">Tara the Builder</div><div class="tx"></div></div><button class="skip">Skip</button>';
-    STG.appendChild(r); this.r=r; setInert(true); r.querySelector('.skip').onclick=()=>this.leave();
+    r.innerHTML='<div class="shade"></div><div class="who">'+TARA_FULL+'</div><div class="say"><div class="nm">Tara the Builder</div><div class="tx"></div></div>';
+    STG.appendChild(r); this.r=r; setInert(true); 
     setTimeout(()=>{ if(this.r!==r) return; r.classList.add('on'); setTimeout(()=>{ if(this.r!==r) return; r.classList.add('idle'); r.querySelector('.tx').textContent=text; r.querySelector('.say').classList.add('show');
       Voice.speak(text,()=>{ if(this.r===r) this.tm=setTimeout(()=>this.leave(),600); }); },650); },30); },
-  leave(){ if(!this.r) return; clearTimeout(this.tm); Voice.stop(); const r=this.r; r.classList.add('off'); this.r=null;
-    setTimeout(()=>{ r.remove(); this.act=false; setInert(false); const d=this.done; this.done=null; if(d) d(); },420); },
+  leave(){ if(!this.r) return; clearTimeout(this.tm); Voice.stop(); const r=this.r; this.r=null; r.remove(); this.act=false; setInert(false); const d=this.done; this.done=null; if(d) d(); },
   stop(){ clearTimeout(this.tm); if(this.r){ this.r.remove(); this.r=null; } if(this.act){ this.act=false; setInert(false); } } };
 function setInert(on){ ['#hdr','#ins','#work','#foot'].forEach(s=>{ const e=$(s); if(on) e.setAttribute('inert',''); else e.removeAttribute('inert'); }); STG.classList.toggle('coaching',!!on); }
 function coach(id,lines,after){ if(S.coachSeen[id]){ if(after) after(); return; } S.coachSeen[id]=true; Coach.play(lines,after); }
