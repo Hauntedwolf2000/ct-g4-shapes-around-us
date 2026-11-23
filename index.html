@@ -432,9 +432,24 @@ function guide(o){
 }
 function fb(text,kind='info'){ const e=$('#fbx'); if(!e) return; if(!text){ e.className='fb'; e.innerHTML=''; return; }
   e.className='fb '+kind; e.innerHTML='<span class="fbt">'+text+'</span>'; }
+const RESET={
+  problem(){}, story(){ ST.pick=null; },
+  m1(){ Object.assign(M1,{i:0,ph:0,angle:0,placed:{}}); },
+  m2(){ Object.assign(M2,{ph:0,read:[],bx:1,by:1,horiz:true,removed:[],locked:false}); },
+  m3(){ Object.assign(M3,{ph:0,sel:[],saved:[]}); },
+  m4(){ Object.assign(M4,{slots:[null,null,null],tray:[3,1,2],mem:{},running:false,state:['','',''],ok:false,fail:null}); },
+  a(){ Object.assign(PA,{ph:0,seen:{},cur:null,turnFor:null}); },
+  b(){ Object.assign(SB,{ph:0,marks:{f:new Set(),e:new Set(),v:new Set()},n:3,tried:{3:[4,6,4]},ok:false}); },
+  c(){ Object.assign(SC,{ph:0,pos:50,log:[],picked:null}); },
+  d(){ SD.removed=[]; } };
+function goBack(){ const sc=S.screen;
+  if(sc==='story'&&ST.i>0){ ST.i--; ST.pick=null; SCREENS.story(); return; }
+  if(sc==='m1'){ ST.i=SCENES.length-1; ST.pick=null; }
+  const i=FLOW.indexOf(sc); if(i>0) go(FLOW[i-1]); }
+function restart(){ if(RESET[S.screen]){ RESET[S.screen](); G.text=null; Coach.stop(); SCREENS[S.screen](); } }
 function setFoot({next=null,hint=true}){
-  $('#foot').innerHTML=(hint?'<button class="btn yellow" id="fHint">💡 Hint</button>':'')+'<div class="fb" id="fbx"></div>'+(next?`<button class="btn orange big" id="fNext" ${next.on?'':'disabled'}>${next.label}</button>`:'');
-  if(hint) $('#fHint').onclick=()=>{ beep('pop'); fb('Do this: '+(G.hint||G.text||''),'info'); cue(); armIdle(12000); };
+  $('#foot').innerHTML=(hint?'<button class="btn ghost" id="fBack">◀ Back</button><button class="btn ghost" id="fRestart">↺ Restart</button>':'')+'<div class="fb" id="fbx"></div>'+(next?`<button class="btn orange big" id="fNext" ${next.on?'':'disabled'}>${next.label}</button>`:'');
+  if(hint){ $('#fBack').onclick=()=>{ beep('pop'); goBack(); }; $('#fRestart').onclick=()=>{ beep('pop'); restart(); }; }
   if(next){ $('#fNext').onclick=()=>{ if(!next.on) return; beep('pop'); next.fn(); }; if(next.on) $('#fNext').classList.add('pulse-btn'); } }
 let HINTS=[];
 const FLOW=['home','problem','story','m1','m2','m3','m4','a','b','c','d','end'];
@@ -893,7 +908,7 @@ SCREENS.end=function(){
    TOP-BAR TOOLS + START
    ===================================================================== */
 $('#bSnd').onclick=()=>{ S.sfx=!S.sfx; $('#bSnd').classList.toggle('off',!S.sfx); $('#bSnd').textContent=S.sfx?'🔊 Sound on':'🔇 Sound off'; };
-$('#bHelp').onclick=()=>modal({icon:'',title:'How to play',ok:'Got it',msg:'<ul style="margin:0;padding-left:34px"><li>The top bar says what to do now. Tara introduces each part.</li><li>The glowing thing is what to touch. Grey things are locked.</li><li>Press Hint and the hand shows the move.</li><li>Finish a task to earn a badge.</li></ul>'});
+$('#bHelp').onclick=()=>{ if(!G.text||Coach.act) return; beep('pop'); fb('Do this: '+(G.hint||G.text),'info'); cue(); armIdle(12000); };
 /* CT-416: buttons carry text only. Emoji belong to the design, never to controls. */
 const EMO=/[\u{1F000}-\u{1FAFF}\u{2600}-\u{27BF}\u{2B00}-\u{2BFF}\u{FE0F}\u{200D}]/gu;
 function cleanBtns(root){ root.querySelectorAll('button').forEach(b=>{ b.querySelectorAll('.ic').forEach(x=>x.remove()); const w=document.createTreeWalker(b,NodeFilter.SHOW_TEXT); let t; while((t=w.nextNode())){ const v=t.nodeValue.replace(EMO,''); if(v!==t.nodeValue) t.nodeValue=v.replace(/^\s+/,''); } }); }
