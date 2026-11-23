@@ -64,7 +64,7 @@ body{font-family:'Fredoka','Trebuchet MS','Comic Sans MS',system-ui,sans-serif;c
 .ibub::before{content:"";position:absolute;left:-20px;top:36px;border:13px solid transparent;border-left:0;border-right:18px solid var(--ink)}
 .ibub::after{content:"";position:absolute;left:-13px;top:40px;border:9px solid transparent;border-left:0;border-right:13px solid #fff}
 .it1{font-size:33px;line-height:40px;font-weight:700;white-space:nowrap;overflow:hidden}
-.it2{font-size:28px;line-height:30px;color:var(--ink2);white-space:nowrap;overflow:hidden}
+.it2{font-size:28px;line-height:36px;height:36px;color:var(--ink2);white-space:nowrap;overflow:hidden}
 .it2.good{color:var(--green-d);font-weight:600}.it2.try{color:var(--orange-d);font-weight:600}
 .ipill{width:240px;height:104px;flex:none;background:#fff;border:4px solid var(--orange);border-radius:22px;display:flex;flex-direction:column;align-items:center;justify-content:center}
 .ipill .p1{font-size:28px;color:var(--ink2);font-weight:600;white-space:nowrap;line-height:24px}
@@ -140,27 +140,28 @@ input[type=range]{width:100%;height:34px;margin:0;accent-color:var(--orange);dis
 .tara .eyes{transform-box:fill-box;transform-origin:center;animation:blink 4.2s infinite}
 @keyframes blink{0%,95%,100%{transform:scaleY(1)}97%{transform:scaleY(.12)}}
 #coach{position:absolute;inset:0;z-index:120;pointer-events:none}
-#coach .shade{position:absolute;inset:0;background:rgba(10,14,22,.74);pointer-events:auto}
+#coach .shade{position:absolute;inset:0;background:transparent;pointer-events:auto}
 
 .tpng{width:100%;height:100%;object-fit:contain;display:block}
 .tface{width:170px;height:170px;max-width:none;margin:4px 0 0 -33px;display:block}
 .homerow .tbig{width:300px;height:354px}
-#coach .who{position:absolute;left:0;bottom:0;width:360px;height:262px;overflow:hidden;filter:drop-shadow(0 10px 14px rgba(0,0,0,.35))}
-#coach .who img,#coach .who svg{width:440px;height:440px;max-width:none;margin-left:-60px;display:block}
+#coach .who{position:absolute;left:14px;bottom:0;width:220px;height:120px;overflow:hidden}
+#coach .who img,#coach .who svg{width:226px;height:226px;max-width:none;margin-left:-2px;margin-top:2px;display:block}
 
 
 
 
 
 
-#stage.coaching .tools,#stage.coaching #foot>*{visibility:hidden}
+#stage.coaching #foot>*{visibility:hidden}
 #coach .say:not(.show){display:none}
-#coach .say{position:absolute;left:400px;bottom:40px;width:max-content;min-width:760px;max-width:1330px;min-height:150px;background:#fff;border:6px solid #24405f;border-radius:36px;padding:20px 30px;display:flex;align-items:center;gap:24px;pointer-events:auto}
+#coach .say{position:absolute;left:256px;right:24px;bottom:8px;min-height:104px;background:#fff;border:5px solid #24405f;border-radius:30px;padding:8px 24px;display:flex;align-items:center;pointer-events:auto}
 #coach .say.show{display:flex}
-#coach .say::before{content:"";position:absolute;left:-34px;bottom:44px;border:20px solid transparent;border-left:0;border-right:30px solid #24405f}
-#coach .say::after{content:"";position:absolute;left:-22px;bottom:50px;border:14px solid transparent;border-left:0;border-right:22px solid #fff}
-#coach .nm{position:absolute;left:30px;top:-24px;background:var(--orange);color:#fff;font-weight:700;font-size:28px;line-height:34px;padding:4px 20px;border-radius:999px;border:4px solid #24405f;white-space:nowrap}
-#coach .tx{flex:1;min-width:0;font-size:38px;line-height:48px;font-weight:600}
+#coach .say::before{content:"";position:absolute;left:-30px;bottom:34px;border:16px solid transparent;border-left:0;border-right:26px solid #24405f}
+#coach .say::after{content:"";position:absolute;left:-19px;bottom:39px;border:11px solid transparent;border-left:0;border-right:19px solid #fff}
+#coach .nm{display:none}
+#coach .tx{flex:1;min-width:0;font-size:30px;line-height:38px;font-weight:600;max-height:76px;overflow:hidden}
+#coach .tx b{color:var(--orange-d)}
 #coach .tx .h{visibility:hidden}
 #coach .nxt{flex:none;font:inherit;font-weight:700;font-size:32px;color:#fff;background:#e4572e;border:4px solid #d96a1c;border-radius:999px;padding:8px 30px;cursor:pointer;box-shadow:0 5px 0 #a93c1a;visibility:hidden;opacity:0;white-space:nowrap}
 #coach .nxt.ready{visibility:visible;opacity:1;animation:nudge 1.3s ease-in-out infinite}
@@ -384,7 +385,7 @@ const Coach={act:false,r:null,tm:0,
     const r=document.createElement('div'); r.id='coach';
     r.innerHTML='<div class="shade"></div><div class="who">'+TARA_FULL+'</div><div class="say"><div class="nm">Tara the Builder</div><div class="tx"></div></div>';
     STG.appendChild(r); this.r=r; setInert(true); 
-    r.querySelector('.tx').textContent=text; r.querySelector('.say').classList.add('show');
+    r.querySelector('.tx').innerHTML='<b>Tara:</b> '+text.replace(/</g,'&lt;'); r.querySelector('.say').classList.add('show');
     Voice.speak(text,()=>{ if(this.r===r) this.tm=setTimeout(()=>this.leave(),600); }); },
   leave(){ if(!this.r) return; clearTimeout(this.tm); Voice.stop(); const r=this.r; this.r=null; r.remove(); this.act=false; setInert(false); const d=this.done; this.done=null; if(d) d(); },
   stop(){ clearTimeout(this.tm); if(this.r){ this.r.remove(); this.r=null; } if(this.act){ this.act=false; setInert(false); } } };
