@@ -1,0 +1,926 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ulipsu - Grade 4 Chapter 1 - Shapes Around Us</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* =========================================================
+   THEME
+   ========================================================= */
+:root{
+  --ink:#2b2d42; --ink2:#5b5f7a; --cream:#fff8e7; --sky:#d8f0ff;
+  --orange:#ff8a3d; --orange-d:#d96a1f; --yellow:#ffd23f; --yellow-d:#d9a900;
+  --blue:#3ea6ff; --blue-d:#1d7fd6; --green:#3ccf91; --green-d:#1f9f6c;
+  --purple:#8f6bff; --purple-d:#6544d6; --red:#ff5d5d; --line:#e6dfc8;
+}
+*{box-sizing:border-box}
+svg{display:block}
+html,body{margin:0;padding:0;width:100%;height:100%;overflow:hidden}
+body{font-family:'Fredoka','Trebuchet MS','Comic Sans MS',system-ui,sans-serif;color:var(--ink);background:#bfe6ff;-webkit-user-select:none;user-select:none}
+#viewport{position:fixed;inset:0;overflow:hidden;background:linear-gradient(180deg,#bfe6ff,#fff3d0)}
+
+/* =========================================================
+   FIXED 1920 x 1080 STAGE  (header 88 | instruction 130 | work 766 | footer 96)
+   ========================================================= */
+#stage{position:absolute;left:50%;top:50%;width:1920px;height:1080px;transform-origin:center center;overflow:hidden;
+  background:linear-gradient(180deg,var(--sky) 0%,#f3fbff 40%,var(--cream) 100%);font-size:28px;line-height:1.3}
+/* shell zones per CT-1104: header 0-120, content 120-960 (instruction bar 128 + work area 712), footer 960-1080 */
+#bgshapes{position:absolute;inset:0;overflow:hidden;pointer-events:none}
+#bgshapes span{position:absolute;top:0;opacity:.3;animation:drift 22s linear infinite}
+#bgshapes .c{width:70px;height:70px;border-radius:50%;background:var(--yellow)}
+#bgshapes .s{width:60px;height:60px;border-radius:12px;background:#ff6fa5}
+#bgshapes .t{width:0;height:0;border-left:36px solid transparent;border-right:36px solid transparent;border-bottom:62px solid var(--blue)}
+@keyframes drift{0%{transform:translateY(1120px) rotate(0)}100%{transform:translateY(-140px) rotate(360deg)}}
+#hdr{position:absolute;left:0;top:0;width:1920px;height:120px;background:#fff;border-bottom:5px solid var(--yellow);display:flex;align-items:center;gap:20px;padding:0 28px}
+#ins{position:absolute;left:0;top:120px;width:1920px;height:128px;background:#fff8d6;border-bottom:5px solid var(--yellow);display:flex;align-items:center;gap:20px;padding:0 24px}
+#work{position:absolute;left:0;top:248px;width:1920px;height:712px;padding:14px 16px}
+#foot{position:absolute;left:0;top:960px;width:1920px;height:120px;background:#fff;border-top:5px solid var(--yellow);display:flex;align-items:center;gap:20px;padding:0 32px}
+#stage.noins #ins{display:none}
+#stage.noins #work{top:120px;height:840px}
+
+/* header: class name, progress, sound, help, logo top-right (CT-1104) */
+.brand{width:430px;flex:none}
+.brand .bt1{font-weight:700;font-size:34px;line-height:40px;white-space:nowrap}
+.brand .bt2{font-size:28px;line-height:34px;color:var(--ink2);white-space:nowrap}
+#prog{flex:1;min-width:0;display:flex;gap:10px;justify-content:center}
+#prog span{font-size:28px;line-height:34px;font-weight:600;border:3px solid var(--line);background:#fff;border-radius:999px;padding:6px 20px;color:var(--ink2);white-space:nowrap}
+#prog span.on{background:var(--blue);border-color:var(--blue-d);color:#fff}
+#prog span.ok{background:#e9f9f1;border-color:var(--green);color:var(--green-d)}
+.tools{display:flex;align-items:center;gap:12px;flex:none}
+.coins{background:#fff8d6;border:3px solid var(--yellow-d);border-radius:999px;padding:6px 20px;font-weight:700;font-size:28px;line-height:34px;white-space:nowrap}
+.coins.pulse{animation:pulse .45s}
+@keyframes pulse{50%{transform:scale(1.15)}}
+.ibtn{height:64px;border-radius:16px;border:3px solid var(--line);background:#fff;font:inherit;font-weight:600;font-size:28px;cursor:pointer;flex:none;padding:0 22px;white-space:nowrap}
+.ibtn.off{opacity:.55}
+.hlogo{height:64px;width:auto;flex:none;display:block;margin-left:8px}
+
+/* instruction bar (what to do NOW) */
+.iface{width:104px;height:104px;border-radius:50%;background:#fff url(assets/img/tara.png) -33px 4px/170px 170px no-repeat;border:5px solid var(--ink);overflow:hidden;flex:none}
+.iface svg{width:100%;height:100%;display:block}
+.ibub{flex:1;min-width:0;height:104px;background:#fff;border:4px solid var(--ink);border-radius:26px;padding:10px 24px;display:flex;flex-direction:column;justify-content:center;position:relative}
+.ibub::before{content:"";position:absolute;left:-20px;top:36px;border:13px solid transparent;border-left:0;border-right:18px solid var(--ink)}
+.ibub::after{content:"";position:absolute;left:-13px;top:40px;border:9px solid transparent;border-left:0;border-right:13px solid #fff}
+.it1{font-size:33px;line-height:40px;font-weight:700;white-space:nowrap;overflow:hidden}
+.it2{font-size:28px;line-height:30px;color:var(--ink2);white-space:nowrap;overflow:hidden}
+.it2.good{color:var(--green-d);font-weight:600}.it2.try{color:var(--orange-d);font-weight:600}
+.ipill{width:240px;height:104px;flex:none;background:#fff;border:4px solid var(--orange);border-radius:22px;display:flex;flex-direction:column;align-items:center;justify-content:center}
+.ipill .p1{font-size:28px;color:var(--ink2);font-weight:600;white-space:nowrap;line-height:24px}
+.ipill .p2{font-size:30px;color:var(--orange-d);font-weight:700;white-space:nowrap;line-height:36px}
+.ipill.done{border-color:var(--green)}.ipill.done .p2{color:var(--green-d)}
+
+/* footer */
+.fb{flex:1;min-width:0;height:96px;display:flex;align-items:center;gap:12px;font-size:28px;line-height:36px;padding:0 16px;border-radius:18px}
+.fb .fbt{overflow:hidden;max-height:76px}
+.fb.good{background:#e9f9f1;color:var(--green-d);font-weight:600}
+.fb.try{background:#fff1e6;color:var(--orange-d);font-weight:600}
+.fb.info{background:#eef8ff;color:var(--blue-d);font-weight:600}
+.fb .fbi{font-size:34px;line-height:42px;height:42px;flex:none}
+
+/* buttons */
+.btn{font:inherit;font-weight:700;font-size:28px;color:#fff;background:var(--blue);border:0;border-radius:18px;padding:10px 24px;cursor:pointer;box-shadow:0 6px 0 var(--blue-d);white-space:nowrap;line-height:1.2}
+.btn:active{transform:translateY(3px);box-shadow:0 3px 0 var(--blue-d)}
+.btn.orange{background:var(--orange);box-shadow:0 6px 0 var(--orange-d)}
+.btn.green{background:var(--green);box-shadow:0 6px 0 var(--green-d)}
+.btn.purple{background:var(--purple);box-shadow:0 6px 0 var(--purple-d)}
+.btn.yellow{background:var(--yellow);color:var(--ink);box-shadow:0 6px 0 var(--yellow-d)}
+.btn.ghost{background:#fff;color:var(--ink);border:3px solid var(--line);box-shadow:0 5px 0 var(--line)}
+.btn.sm{font-size:28px;padding:6px 16px;border-radius:14px}
+.btn.big{font-size:32px;padding:12px 34px;border-radius:22px}
+.btn[disabled]{opacity:.4;cursor:not-allowed;box-shadow:none;transform:none}
+.pulse-btn{animation:wob 1s infinite}
+@keyframes wob{0%,100%{transform:scale(1)}50%{transform:scale(1.06)}}
+
+/* guidance: glow = touch this next, lock = not yet */
+.hl{animation:glow 1.1s infinite;border-color:var(--orange)!important}
+@keyframes glow{0%,100%{box-shadow:0 0 0 0 rgba(255,138,61,.85)}50%{box-shadow:0 0 0 10px rgba(255,138,61,0)}}
+.svghl{animation:sglow 1.1s infinite}
+@keyframes sglow{0%,100%{filter:drop-shadow(0 0 0 rgba(255,138,61,0))}50%{filter:drop-shadow(0 0 8px rgba(255,138,61,1))}}
+.lock{opacity:.35;pointer-events:none;filter:grayscale(.6)}
+#stage.audit *{animation:none!important;transition:none!important}
+
+/* panels */
+.pn{background:#fffdf4;border:4px dashed var(--line);border-radius:24px;padding:12px 16px;overflow:hidden;min-width:0;min-height:0}
+.pt{font-size:28px;line-height:34px;font-weight:700;margin:0 0 8px;white-space:nowrap}
+.note{font-size:28px;line-height:27px;color:var(--ink2)}
+.chip{display:inline-block;border:3px solid var(--line);background:#fff;border-radius:999px;padding:1px 14px;font-weight:600;font-size:28px;line-height:30px;margin:3px 6px 3px 0;white-space:nowrap}
+.chip.ok{background:#e9f9f1;border-color:var(--green)}
+.chip.now{background:#fff1e6;border-color:var(--orange)}
+.vb{background:radial-gradient(circle at 50% 40%,#fff,#eaf6ff);border:4px solid var(--blue);border-radius:24px;touch-action:none;cursor:grab;overflow:hidden}
+.vb svg{display:block;width:100%;height:100%}
+table.t{border-collapse:collapse;width:100%;font-size:28px;line-height:28px}
+table.t th,table.t td{border:3px solid var(--line);padding:3px 10px;text-align:center;white-space:nowrap}
+table.t th{background:#fff8d6}
+table.t tr.hl2 td{background:#e9f9f1;font-weight:700}
+input[type=range]{width:100%;height:34px;margin:0;accent-color:var(--orange);display:block}
+.rb{display:flex;gap:10px;justify-content:center}
+.row2{display:flex;gap:12px;flex-wrap:wrap}
+.col{display:flex;flex-direction:column;gap:16px;min-height:0;min-width:0}
+.ghost{fill:rgba(62,166,255,.1);stroke:#3ea6ff;stroke-width:2.5;stroke-dasharray:6 5;cursor:pointer}
+.float{position:absolute;z-index:200;pointer-events:none;font-weight:700;font-size:32px;background:var(--yellow);border:4px solid var(--yellow-d);border-radius:999px;padding:2px 18px;animation:fl 1s ease-out forwards}
+@keyframes fl{0%{transform:translateY(0);opacity:1}100%{transform:translateY(-100px);opacity:0}}
+
+/* modal */
+#modal{position:absolute;inset:0;background:rgba(43,45,66,.6);z-index:150;display:none;align-items:center;justify-content:center}
+#modal.show{display:flex}
+#modal .box{background:#fff;border:6px solid var(--ink);border-radius:32px;width:980px;padding:28px 44px;text-align:center}
+#modal .mi{font-size:78px;line-height:96px}
+#modal h3{font-size:42px;line-height:52px;margin:4px 0 12px}
+#modal .mb{font-size:28px;line-height:38px;text-align:left;margin:0 0 22px}
+
+/* =========================================================
+   GUIDE CHARACTER (Tara) + COACH OVERLAY
+   ========================================================= */
+.tara .mo{opacity:0}
+.talk .tara .mc{animation:mA .3s steps(1) infinite}
+.talk .tara .mo{animation:mB .3s steps(1) infinite}
+@keyframes mA{50%{opacity:0}} @keyframes mB{0%{opacity:0}50%{opacity:1}}
+.tara .eyes{transform-box:fill-box;transform-origin:center;animation:blink 4.2s infinite}
+@keyframes blink{0%,95%,100%{transform:scaleY(1)}97%{transform:scaleY(.12)}}
+#coach{position:absolute;inset:0;z-index:120;pointer-events:none}
+#coach .shade{position:absolute;inset:0;background:rgba(10,14,22,.74);opacity:0;transition:opacity .3s;pointer-events:auto}
+#coach.on .shade{opacity:1} #coach.off .shade{opacity:0}
+.tpng{width:100%;height:100%;object-fit:contain;display:block}
+.tface{width:170px;height:170px;max-width:none;margin:4px 0 0 -33px;display:block}
+.homerow .tbig{width:300px;height:354px}
+#coach .who{position:absolute;left:-30px;bottom:-262px;width:540px;height:540px;transform:translateX(-130%);filter:drop-shadow(0 10px 14px rgba(0,0,0,.35))}
+#coach .who svg{width:100%;height:100%;display:block}
+#coach.on .who{animation:sneak .6s ease-out forwards}
+#coach.on.idle .who{transform:none;animation:bob 3.2s ease-in-out infinite}
+#coach.off .who{animation:sneakOut .4s ease-in forwards}
+@keyframes sneak{0%{transform:translateX(-130%) rotate(-8deg)}60%{transform:translateX(-20%) rotate(4deg)}100%{transform:none}}
+@keyframes sneakOut{0%{transform:none}100%{transform:translateX(-140%) rotate(6deg)}}
+@keyframes bob{50%{transform:translateY(-8px)}}
+#stage.coaching .tools,#stage.coaching #foot>*{visibility:hidden}
+#coach .say{position:absolute;left:420px;bottom:40px;width:max-content;min-width:760px;max-width:1330px;min-height:150px;background:#fff;border:6px solid #24405f;border-radius:36px;padding:20px 30px;display:flex;align-items:center;gap:24px;pointer-events:auto;opacity:0;transform:scale(.85);transform-origin:0 100%;transition:opacity .2s,transform .25s cubic-bezier(.2,.9,.3,1.3)}
+#coach .say.show{opacity:1;transform:none}
+#coach .say::before{content:"";position:absolute;left:-34px;bottom:44px;border:20px solid transparent;border-left:0;border-right:30px solid #24405f}
+#coach .say::after{content:"";position:absolute;left:-22px;bottom:50px;border:14px solid transparent;border-left:0;border-right:22px solid #fff}
+#coach .nm{position:absolute;left:30px;top:-24px;background:var(--orange);color:#fff;font-weight:700;font-size:28px;line-height:34px;padding:4px 20px;border-radius:999px;border:4px solid #24405f;white-space:nowrap}
+#coach .tx{flex:1;min-width:0;font-size:38px;line-height:48px;font-weight:600}
+#coach .tx .h{visibility:hidden}
+#coach .nxt{flex:none;font:inherit;font-weight:700;font-size:32px;color:#fff;background:#e4572e;border:4px solid #d96a1c;border-radius:999px;padding:8px 30px;cursor:pointer;box-shadow:0 5px 0 #a93c1a;visibility:hidden;opacity:0;white-space:nowrap}
+#coach .nxt.ready{visibility:visible;opacity:1;animation:nudge 1.3s ease-in-out infinite}
+@keyframes nudge{50%{transform:translateX(6px)}}
+#coach .skip{position:absolute;right:34px;top:16px;font:inherit;font-weight:700;font-size:28px;height:64px;padding:0 26px;border-radius:999px;border:5px solid #fff;background:#e4572e;color:#fff;cursor:pointer;box-shadow:0 5px 0 rgba(0,0,0,.3);pointer-events:auto;white-space:nowrap}
+.cspot{position:relative;z-index:130;outline:7px solid #ffc93c;outline-offset:4px;animation:spot 1s ease-in-out infinite}
+@keyframes spot{50%{outline-color:#ff8a3d}}
+#hand{position:absolute;left:0;top:0;width:150px;height:150px;z-index:140;pointer-events:none;opacity:0}
+#hand img,#hand svg{width:100%;height:100%;display:block;mix-blend-mode:multiply;filter:drop-shadow(0 6px 6px rgba(0,0,0,.3))}
+
+/* =========================================================
+   SCREENS
+   ========================================================= */
+/* home / end */
+.center{height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:22px}
+.center h1{font-size:92px;line-height:110px;margin:0}.center h1 span{color:var(--orange)}
+.center p.lead{font-size:32px;line-height:42px;width:1300px;margin:0;color:var(--ink2)}
+.homerow{display:flex;align-items:flex-end;gap:40px}
+.homerow .tbig{width:230px;height:354px}
+.how3{display:grid;grid-template-columns:repeat(3,500px);gap:24px}
+.how3 div{background:#fff8d6;border:4px solid var(--yellow);border-radius:24px;padding:14px 20px;font-size:28px;line-height:32px;text-align:left;height:140px;overflow:hidden}
+.how3 b:first-child{display:block;font-size:29px;line-height:36px}
+.learn{display:grid;grid-template-columns:repeat(4,430px);gap:20px}
+.learn div{background:#fff;border:4px solid var(--green);border-radius:22px;padding:10px 16px;font-size:28px;line-height:28px;text-align:left;height:150px;overflow:hidden}
+.learn b:first-child{display:block;font-size:28px;line-height:32px}
+/* story */
+.story{display:grid;grid-template-columns:420px 1fr;gap:24px;height:100%}
+.sp1{display:flex;flex-direction:column;align-items:center;gap:10px;padding-top:24px}
+.bigav{width:180px;height:180px;border-radius:50%;background:var(--yellow);border:6px solid var(--ink);display:grid;place-items:center;font-size:100px;line-height:1}
+.sname{font-size:34px;line-height:42px;font-weight:700;white-space:nowrap}
+.splace{font-size:28px;line-height:32px;color:var(--ink2);white-space:nowrap}
+.trail{display:flex;gap:4px;font-size:28px;line-height:40px;margin-top:10px}
+.trail span{opacity:.3}.trail span.v{opacity:1}
+.sp2{display:flex;flex-direction:column;justify-content:center;gap:24px;min-height:0;min-width:0}
+.speech{background:#eef8ff;border:5px solid var(--blue);border-radius:28px;padding:20px 28px;font-size:31px;line-height:42px;height:240px;overflow:hidden}
+.speech b{color:var(--orange-d)}
+.shapes{display:flex;gap:40px;font-size:84px;line-height:100px}.shapes{animation:bob 2.4s ease-in-out infinite}
+@keyframes bob{50%{transform:translateY(-12px)}}
+.card1{background:#fff;border:5px solid var(--ink);border-radius:32px;padding:24px 48px}
+.lesson{background:#fff;border:5px solid var(--green);border-radius:28px;padding:20px 30px;font-size:34px;line-height:46px;height:250px;overflow:hidden}
+.speech.sm{height:182px;font-size:29px;line-height:38px}
+.choices{display:grid;grid-template-columns:1fr 1fr;gap:28px;padding:10px}
+.choice{font:inherit;text-align:left;border:5px solid var(--ink);background:#fff;border-radius:28px;padding:16px 24px;cursor:pointer;display:flex;gap:18px;align-items:center;font-weight:600;font-size:31px;line-height:40px;height:190px;box-shadow:0 7px 0 rgba(43,45,66,.2);overflow:hidden}
+.choice .ic{font-size:64px;line-height:80px;flex:none}
+.choices.one{grid-template-columns:1fr;width:720px}
+.brief{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.brief div{border-radius:24px;padding:14px 20px;border:5px solid;font-size:28px;line-height:31px;height:340px;overflow:hidden}
+.brief b:first-child{display:block;font-size:28px;line-height:36px;margin-bottom:4px}
+.brief .why{background:#fff1e6;border-color:var(--orange)}.brief .what{background:#e9f9f1;border-color:var(--green)}.brief .where{background:#f1ebff;border-color:var(--purple)}
+/* M1 */
+.m1g{display:grid;grid-template-columns:430px 790px 620px;gap:24px;height:100%}
+.pile .it{display:flex;align-items:center;gap:10px;width:100%;font:inherit;background:#fff;border:4px solid var(--line);border-radius:18px;padding:4px 10px;margin-bottom:10px;cursor:pointer;font-weight:600;font-size:28px;line-height:28px;text-align:left;height:90px}
+.pile .it svg{width:82px;height:72px;flex:none}
+.shelf{background:#fff;border:4px solid var(--line);border-radius:18px;padding:6px 12px;height:306px;overflow:hidden}
+.shelf+.shelf{margin-top:14px}
+.shelf h5{margin:0 0 2px;font-size:28px;line-height:34px;white-space:nowrap}
+.got{display:flex;align-items:center;gap:8px;font-size:28px;line-height:36px;font-weight:600;height:80px}
+.got svg{width:80px;height:72px;flex:none}
+.shelf.s2{border-color:var(--green)}.shelf.s3{border-color:var(--purple)}
+.turnbox{border:4px solid var(--line);border-radius:16px;padding:6px 14px}
+.turnbox .tl{font-size:28px;line-height:32px;font-weight:600;white-space:nowrap}
+/* M2 */
+.m2g{display:grid;grid-template-columns:1120px 1fr;gap:24px;height:100%}
+.dpad{display:grid;grid-template-columns:repeat(3,84px);grid-template-rows:repeat(3,64px);gap:8px}
+.dpad .btn{padding:0;font-size:30px;width:84px;height:64px}
+/* M3 */
+.m3g{display:grid;grid-template-columns:760px 1fr;gap:24px;height:100%}
+/* M4 */
+.m4g{display:grid;grid-template-columns:560px 640px 640px;gap:24px;height:100%}
+.stepcard{display:flex;gap:12px;align-items:center;width:100%;font:inherit;font-weight:600;font-size:28px;line-height:29px;background:#fff;border:4px solid var(--purple);border-radius:20px;padding:8px 14px;margin-bottom:12px;cursor:pointer;text-align:left;height:190px;overflow:hidden}
+.stepcard .ic{font-size:42px;line-height:56px;flex:none}
+.stepcard small{display:block;font-size:28px;line-height:25px;font-weight:500;color:var(--ink2);margin-top:4px}
+.slot{height:150px;border:4px dashed var(--purple);border-radius:20px;padding:6px 14px;margin-bottom:12px;display:flex;align-items:center;gap:12px;background:#faf6ff;font-weight:600;font-size:28px;line-height:29px;cursor:pointer;overflow:hidden}
+.slot.f{border-style:solid;background:#efe8ff}
+.slot.run{background:#fff8d6;border-color:var(--yellow-d)}.slot.okk{background:#e9f9f1;border-color:var(--green)}.slot.bad{background:#ffe5e5;border-color:var(--red)}
+.sn{width:42px;height:42px;border-radius:50%;background:var(--purple);color:#fff;display:grid;place-items:center;flex:none;font-size:28px}
+.slot .sic{font-size:36px;line-height:48px;flex:none}
+.mem{background:#1f2140;color:#d7f7e6;border-radius:18px;padding:12px 16px;font-family:Consolas,monospace;font-size:28px;line-height:36px;height:262px;overflow:hidden}
+.mem div{margin-bottom:6px}
+/* stations */
+.m5a{display:grid;grid-template-columns:470px 920px 450px;gap:24px;height:100%}
+.cellgrid{display:grid;grid-template-columns:repeat(3,76px);gap:8px;justify-content:center}
+.cell{font:inherit;font-weight:700;width:76px;height:76px;border:4px solid var(--line);background:#f6ecd0;border-radius:14px;cursor:pointer;font-size:30px;color:var(--ink);padding:0}
+.cell.k0{background:#e6e6f2}.cell.k1{background:#cdeeff}.cell.k2{background:#ffe08a}.cell.k3{background:#ffb199}
+.cell.cur{outline:5px solid var(--purple);outline-offset:-2px}
+.layers{display:grid;grid-template-columns:repeat(3,1fr);gap:25px}
+.layers .pn{height:350px}
+.m5b{display:grid;grid-template-columns:800px 1fr;gap:24px;height:100%}
+.m5c{display:grid;grid-template-columns:940px 1fr;gap:24px;height:100%}
+.m5d{display:grid;grid-template-columns:820px 1fr;gap:24px;height:100%}
+.ipill{width:350px}
+.ipill .p1,.note,.pile .it span,.got,.stepcard small,.turnbox .tl,.shelf h5,.slot,.stepcard,.speech b{line-height:36px}
+.stepcard small{margin-top:2px}
+.rb{flex-wrap:wrap}
+.dpad{grid-template-rows:repeat(3,56px)}.dpad .btn{height:56px}
+@media (prefers-reduced-motion:reduce){*{animation-duration:.01s!important}}
+</style>
+</head>
+<body>
+<div id="viewport"><div id="stage">
+  <div id="bgshapes" aria-hidden="true"><span class="c" style="left:6%;animation-duration:26s"></span><span class="s" style="left:20%;animation-duration:32s;animation-delay:-8s"></span><span class="t" style="left:36%;animation-duration:28s;animation-delay:-14s"></span><span class="c" style="left:52%;animation-duration:34s;animation-delay:-20s;background:var(--green)"></span><span class="s" style="left:68%;animation-duration:30s;animation-delay:-4s;background:var(--purple)"></span><span class="t" style="left:82%;animation-duration:36s;animation-delay:-18s;border-bottom-color:var(--orange)"></span><span class="c" style="left:93%;animation-duration:27s;animation-delay:-11s;background:#ff6fa5"></span></div>
+  <div id="hdr">
+    <div class="brand"><div class="bt1">Shapes Around Us</div><div class="bt2" id="clsName">Grade 4 · Chapter 1</div></div>
+    <div id="prog"></div>
+    <div class="tools"><div class="coins" id="badgeBox">🏅 Badges <span id="coinCount">0</span> of 8</div>
+      <button class="ibtn off" id="bSnd">🔇 Sound off</button><button class="ibtn" id="bHelp">❓ Help</button><img class="hlogo" src="assets/img/ulipsu-logo.svg" alt="Ulipsu"></div>
+  </div>
+  <div id="ins"></div>
+  <div id="work"></div>
+  <div id="foot"></div>
+  <div id="modal"><div class="box" id="modalBox"></div></div>
+  <div id="hand"></div>
+</div></div>
+
+<script>
+'use strict';
+/* =====================================================================
+   BASICS: stage scaling, state, sound, coins
+   ===================================================================== */
+const $=(s,r=document)=>r.querySelector(s), $$=(s,r=document)=>[...r.querySelectorAll(s)];
+const D2R=Math.PI/180, STG=$('#stage');
+const S={done:{},awarded:{},screen:'home',sfx:false,coachSeen:{}}; /* sound effects are muted by default (CT-1107) */
+let scale=1;
+function fit(){ scale=Math.min(innerWidth/1920,innerHeight/1080); STG.style.transform=`translate(-50%,-50%) scale(${scale})`; }
+addEventListener('resize',fit); fit();
+let lastPt={x:960,y:500};
+function toStage(cx,cy){ const r=STG.getBoundingClientRect(); return {x:(cx-r.left)/scale,y:(cy-r.top)/scale}; }
+addEventListener('pointerdown',e=>{ lastPt=toStage(e.clientX,e.clientY); armIdle(); },true);
+
+let actx=null;
+function beep(type){ if(!S.sfx) return; try{
+  actx=actx||new (window.AudioContext||window.webkitAudioContext)(); if(actx.state==='suspended') actx.resume();
+  const o=actx.createOscillator(),g=actx.createGain(),t=actx.currentTime; o.connect(g); g.connect(actx.destination);
+  if(type==='ok'){o.type='triangle';o.frequency.setValueAtTime(440,t);o.frequency.exponentialRampToValueAtTime(880,t+.15);g.gain.setValueAtTime(.22,t);g.gain.exponentialRampToValueAtTime(.01,t+.3);o.start();o.stop(t+.3);}
+  else if(type==='no'){o.type='sine';o.frequency.setValueAtTime(260,t);o.frequency.setValueAtTime(200,t+.12);g.gain.setValueAtTime(.18,t);g.gain.exponentialRampToValueAtTime(.01,t+.3);o.start();o.stop(t+.3);}
+  else{o.type='sine';o.frequency.setValueAtTime(988,t);o.frequency.setValueAtTime(1318,t+.07);g.gain.setValueAtTime(.12,t);g.gain.exponentialRampToValueAtTime(.01,t+.2);o.start();o.stop(t+.2);} }catch(e){} }
+function addCoins(){} /* no live points on screen (CT-904): progress is shown as badges */
+function award(){ return true; }
+function confetti(){ const cols=['#ff8a3d','#ffd23f','#3ea6ff','#3ccf91','#8f6bff','#ff6fa5'];
+  for(let i=0;i<40;i++){ const d=document.createElement('div'); d.style.cssText=`position:absolute;z-index:300;width:16px;height:16px;border-radius:${i%2?'50%':'4px'};background:${cols[i%6]};left:${960+Math.random()*700-350}px;top:560px;transition:all 1s ease-out;pointer-events:none`;
+    STG.appendChild(d); setTimeout(()=>{d.style.transform=`translate(${Math.random()*500-250}px,${-Math.random()*400-60}px) rotate(${Math.random()*720}deg)`;d.style.opacity=0;},20); setTimeout(()=>d.remove(),1100);} }
+let modalCb=null;
+function modal({icon='🎉',title='',msg='',ok='OK',cb=null}){
+  $('#modalBox').innerHTML=`<div class="mi">${icon}</div><h3>${title}</h3><div class="mb">${msg}</div><button class="btn orange big" id="mOk">${ok}</button>`;
+  $('#modal').classList.add('show'); hideHand(); modalCb=cb; $('#mOk').onclick=()=>{ closeModal(); const c=modalCb; modalCb=null; if(c) c(); armIdle(2500); }; }
+function closeModal(){ $('#modal').classList.remove('show'); }
+const modalOpen=()=>$('#modal').classList.contains('show');
+
+/* =====================================================================
+   TARA — the guide character (inline SVG, mouth moves while she talks)
+   ===================================================================== */
+const SKIN='#a86b3c', HAIR='#2b1b17';
+const TARA_HEAD=`
+ <circle cx="66" cy="118" r="24" fill="${HAIR}"/><circle cx="194" cy="118" r="24" fill="${HAIR}"/>
+ <circle cx="84" cy="100" r="7" fill="#ff6fa5"/><circle cx="176" cy="100" r="7" fill="#ff6fa5"/>
+ <circle cx="130" cy="128" r="62" fill="${HAIR}"/>
+ <circle cx="77" cy="142" r="11" fill="${SKIN}"/><circle cx="183" cy="142" r="11" fill="${SKIN}"/>
+ <circle cx="130" cy="140" r="53" fill="${SKIN}"/>
+ <path d="M80 122 Q92 100 130 100 Q168 100 180 122 Q160 110 130 112 Q100 110 80 122 Z" fill="${HAIR}"/>
+ <path d="M72 108 Q72 50 130 48 Q188 50 188 108 Z" fill="#ffd23f"/>
+ <rect x="60" y="100" width="140" height="16" rx="8" fill="#ffc21a"/>
+ <path d="M130 50 V100" stroke-width="3" fill="none"/>
+ <rect x="142" y="68" width="20" height="20" rx="3" fill="#ff8a3d" stroke-width="3"/>
+ <path d="M98 126 q12 -8 24 0 M138 126 q12 -8 24 0" fill="none" stroke-width="4"/>
+ <g class="eyes"><ellipse cx="110" cy="146" rx="11" ry="13" fill="#fff" stroke-width="3"/><ellipse cx="150" cy="146" rx="11" ry="13" fill="#fff" stroke-width="3"/>
+   <circle cx="112" cy="148" r="7" fill="#2b2d42" stroke="none"/><circle cx="152" cy="148" r="7" fill="#2b2d42" stroke="none"/>
+   <circle cx="114.5" cy="145" r="2.6" fill="#fff" stroke="none"/><circle cx="154.5" cy="145" r="2.6" fill="#fff" stroke="none"/></g>
+ <circle cx="96" cy="166" r="8" fill="#ff8fa3" stroke="none" opacity=".75"/><circle cx="164" cy="166" r="8" fill="#ff8fa3" stroke="none" opacity=".75"/>
+ <path d="M128 154 q5 5 0 9" fill="none" stroke-width="3"/>
+ <path class="mc" d="M114 172 Q130 190 146 172 Q130 180 114 172 Z" fill="#b3283b" stroke-width="3"/>
+ <g class="mo"><ellipse cx="130" cy="178" rx="12" ry="10" fill="#b3283b" stroke-width="3"/><ellipse cx="130" cy="183" rx="7" ry="3.5" fill="#ff8fa3" stroke="none"/></g>`;
+const TARA_BODY=`
+ <path d="M96 228 L64 188" stroke="#2b2d42" stroke-width="30" fill="none"/><path d="M96 228 L64 188" stroke="#3ea6ff" stroke-width="22" fill="none"/>
+ <path d="M64 188 L52 150" stroke="#2b2d42" stroke-width="24" fill="none"/><path d="M64 188 L52 150" stroke="${SKIN}" stroke-width="16" fill="none"/>
+ <circle cx="50" cy="138" r="15" fill="${SKIN}"/>
+ <rect x="100" y="320" width="24" height="56" fill="${SKIN}"/><rect x="136" y="320" width="24" height="56" fill="${SKIN}"/>
+ <rect x="88" y="368" width="42" height="28" rx="11" fill="#e24b4b"/><rect x="132" y="368" width="42" height="28" rx="11" fill="#e24b4b"/>
+ <polygon points="186,240 250,322 186,322" fill="#9fd4ff"/><polygon points="198,272 222,306 198,306" fill="#fff8e7"/>
+ <rect x="86" y="206" width="88" height="74" rx="26" fill="#3ea6ff"/>
+ <path d="M92 256 H168 L176 330 H84 Z" fill="#ff8a3d"/>
+ <rect x="104" y="232" width="52" height="34" rx="6" fill="#ff8a3d"/>
+ <path d="M106 236 L100 210 M154 236 L160 210" stroke="#2b2d42" stroke-width="13" fill="none"/><path d="M106 236 L100 210 M154 236 L160 210" stroke="#ff8a3d" stroke-width="6" fill="none"/>
+ <circle cx="108" cy="240" r="5" fill="#ffd23f" stroke-width="2.5"/><circle cx="152" cy="240" r="5" fill="#ffd23f" stroke-width="2.5"/>
+ <rect x="117" y="242" width="26" height="18" rx="4" fill="#ffb36b" stroke-width="3"/><path d="M124 256 L130 246 L136 256 Z" fill="#3ea6ff" stroke-width="2"/>
+ <path d="M130 300 V330" stroke-width="3" fill="none"/>
+ <path d="M164 228 L196 264" stroke="#2b2d42" stroke-width="30" fill="none"/><path d="M164 228 L196 264" stroke="#3ea6ff" stroke-width="22" fill="none"/>
+ <path d="M196 264 L204 296" stroke="#2b2d42" stroke-width="24" fill="none"/><path d="M196 264 L204 296" stroke="${SKIN}" stroke-width="16" fill="none"/>
+ <circle cx="205" cy="304" r="15" fill="${SKIN}"/>
+ <rect x="118" y="180" width="24" height="30" fill="${SKIN}"/>`;
+const taraSVG=(vb='0 0 260 400')=>`<svg class="tara" viewBox="${vb}" xmlns="http://www.w3.org/2000/svg"><g stroke="#2b2d42" stroke-width="4" stroke-linejoin="round" stroke-linecap="round">${vb==='0 0 260 400'?TARA_BODY:''}${TARA_HEAD}</g></svg>`;
+/* generated art (agy): assets/img/tara.png (full body, transparent) and assets/img/hand.png; the inline SVG above stays as an offline fallback */
+const TARA_FULL=`<img class="tpng" src="assets/img/tara.png" alt="" onerror="this.outerHTML=taraSVG()">`, TARA_FACE=`<img class="tface" src="assets/img/tara.png" alt="" onerror="this.outerHTML=taraSVG('46 42 168 168')">`;
+const HAND_SVG=`<svg viewBox="0 0 100 130"><g stroke="#2b2d42" stroke-width="4" stroke-linejoin="round" stroke-linecap="round">
+ <ellipse cx="24" cy="74" rx="10" ry="17" transform="rotate(-24 24 74)" fill="#ffd6b0"/>
+ <rect x="22" y="50" width="62" height="58" rx="20" fill="#ffd6b0"/>
+ <path d="M62 60 v16 M74 62 v14" stroke-width="3" fill="none"/>
+ <rect x="38" y="4" width="22" height="66" rx="11" fill="#ffd6b0"/>
+ <rect x="28" y="102" width="50" height="24" rx="6" fill="#3ea6ff"/></g></svg>`;
+$('#hand').innerHTML=`<img src="assets/img/hand.png" alt="" onerror="this.parentNode.innerHTML=HAND_SVG">`;
+
+/* =====================================================================
+   VOICE (device speech; silent timing when off or unavailable)
+   ===================================================================== */
+const Voice={on:true,tok:0,t:0,
+  pick(){ try{ const v=speechSynthesis.getVoices()||[],en=v.filter(x=>/^en/i.test(x.lang)); return en.find(x=>/en[-_]IN/i.test(x.lang))||en.find(x=>/Zira|Aria|Jenny|Samantha|Female/i.test(x.name))||en[0]||null; }catch(e){ return null; } },
+  speak(html,onEnd){ const my=++this.tok; let done=false; const text=html.replace(/<[^>]+>/g,' ').replace(/[“”]/g,'').replace(/\s+/g,' ').trim(), est=Math.max(1600,text.length*62+900);
+    const fin=()=>{ if(done||my!==this.tok) return; done=true; clearTimeout(this.t); if(onEnd) onEnd(); };
+    let active=true; try{ active=navigator.userActivation?navigator.userActivation.hasBeenActive:true; }catch(e){}
+    if(!this.on||!active||!window.speechSynthesis||!window.SpeechSynthesisUtterance){ this.t=setTimeout(fin,Math.min(est,2600)); return; }
+    try{ speechSynthesis.cancel(); const u=new SpeechSynthesisUtterance(text),v=this.pick(); if(v) u.voice=v; u.lang=(v&&v.lang)||'en-IN'; u.rate=.95; u.pitch=1.12; u.onend=u.onerror=fin; speechSynthesis.speak(u); this.t=setTimeout(fin,est*1.8+2500); }
+    catch(e){ this.t=setTimeout(fin,est); } },
+  stop(){ this.tok++; clearTimeout(this.t); try{ speechSynthesis.cancel(); }catch(e){} } };
+try{ speechSynthesis.getVoices(); }catch(e){}
+
+/* =====================================================================
+   COACH: Tara walks in, tells the situation line by line, then leaves.
+   Everything underneath is locked while she talks. Skip is always available.
+   ===================================================================== */
+const Coach={act:false,r:null,tm:0,
+  play(lines,done){ this.stop(); Voice.stop(); this.act=true; this.done=done; hideHand(); const text=[].concat(lines).join(' ');
+    const r=document.createElement('div'); r.id='coach';
+    r.innerHTML='<div class="shade"></div><div class="who">'+TARA_FULL+'</div><div class="say"><div class="nm">Tara the Builder</div><div class="tx"></div></div><button class="skip">Skip</button>';
+    STG.appendChild(r); this.r=r; setInert(true); r.querySelector('.skip').onclick=()=>this.leave();
+    setTimeout(()=>{ if(this.r!==r) return; r.classList.add('on'); setTimeout(()=>{ if(this.r!==r) return; r.classList.add('idle'); r.querySelector('.tx').textContent=text; r.querySelector('.say').classList.add('show');
+      Voice.speak(text,()=>{ if(this.r===r) this.tm=setTimeout(()=>this.leave(),600); }); },650); },30); },
+  leave(){ if(!this.r) return; clearTimeout(this.tm); Voice.stop(); const r=this.r; r.classList.add('off'); this.r=null;
+    setTimeout(()=>{ r.remove(); this.act=false; setInert(false); const d=this.done; this.done=null; if(d) d(); },420); },
+  stop(){ clearTimeout(this.tm); if(this.r){ this.r.remove(); this.r=null; } if(this.act){ this.act=false; setInert(false); } } };
+function setInert(on){ ['#hdr','#ins','#work','#foot'].forEach(s=>{ const e=$(s); if(on) e.setAttribute('inert',''); else e.removeAttribute('inert'); }); STG.classList.toggle('coaching',!!on); }
+function coach(id,lines,after){ if(S.coachSeen[id]){ if(after) after(); return; } S.coachSeen[id]=true; Coach.play(lines,after); }
+
+/* =====================================================================
+   POINTING HAND: shows what to touch. Comes back if the child waits.
+   ===================================================================== */
+let handAnim=null, idleT=0;
+function hideHand(){ try{ if(handAnim) handAnim.cancel(); }catch(e){} handAnim=null; $('#hand').style.opacity=0; }
+function targetEl(){ const sel=G.target; let e=typeof sel==='string'?$(sel):sel; if(!e) e=$('#work .hl, #work .svghl'); if(!e){ const n=$('#fNext'); if(n&&!n.disabled) e=n; } return e; }
+/* the hand performs the real gesture: a slider is dragged, anything else is tapped */
+function cue(){ hideHand(); if(Coach.act||modalOpen()) return; const e=targetEl(); if(!e) return; const sl=e.matches&&e.matches('input[type=range]')?e:(e.querySelector?e.querySelector('input[type=range]'):null); const r=(sl||e).getBoundingClientRect(); if(!r.width) return;
+  const h=$('#hand'); let pts;
+  if(sl){ const mn=+sl.min||0,mx=+sl.max||100,tg=G.dragTo!=null?G.dragTo:mx,f=v=>.03+.94*(v-mn)/(mx-mn); pts=[toStage(r.left+r.width*f(+sl.value),r.top+r.height/2),toStage(r.left+r.width*f(tg),r.top+r.height/2)]; }
+  else pts=[toStage(r.left+r.width/2,r.top+r.height/2)];
+  const low=Math.max(...pts.map(p=>p.y))>800;
+  const tf=(p,s)=>low?`translate(${p.x-62}px,${p.y-130}px) rotate(180deg) scale(${s})`:`translate(${p.x-60}px,${p.y-20}px) scale(${s})`;
+  const a=pts[0],b=pts[pts.length-1];
+  const fr=sl?[{transform:tf(a,1),opacity:0,offset:0},{transform:tf(a,1),opacity:1,offset:.12},{transform:tf(a,.82),opacity:1,offset:.22},{transform:tf(b,.82),opacity:1,offset:.7},{transform:tf(b,1),opacity:1,offset:.8},{transform:tf(b,1),opacity:0,offset:1}]
+    :[{transform:tf(a,1),opacity:0},{transform:tf(a,1),opacity:1,offset:.2},{transform:tf(a,.82),opacity:1,offset:.45},{transform:tf(a,1),opacity:1,offset:.7},{transform:tf(a,1),opacity:0}];
+  h.style.transformOrigin=low?'50% 50%':'49% 3%';
+  try{ handAnim=h.animate(fr,{duration:sl?2600:1300,iterations:2,easing:'ease-in-out'}); handAnim.onfinish=hideHand; }catch(err){} }
+function armIdle(ms=8000){ clearTimeout(idleT); idleT=setTimeout(()=>{ cue(); armIdle(10000); },ms); }
+
+/* =====================================================================
+   GUIDED FRAME — one instruction at a time, read aloud, hand points
+   ===================================================================== */
+const G={text:null,target:null};
+/* the five classes of the ASK (CT-102): Ci, C1, C2, Cc, Assessment. Assessment is not built yet. */
+const CLASSES=[['Ci','Introduction',['problem','story','m1'],'m1'],['C1','Class 1',['m2','m3'],'m3'],['C2','Class 2',['m4','a','b'],'b'],['Cc','Conclusion',['c','d'],'d']];
+function updateProg(){ const cur=CLASSES.findIndex(c=>c[2].includes(S.screen));
+  $('#prog').innerHTML=CLASSES.map((c,i)=>{ const dn=!!S.done[c[3]]; return `<span class="${i===cur?'on':(dn?'ok':'')}">${c[0]}${dn&&i!==cur?' done':''}</span>`; }).join('');
+  $('#clsName').textContent=cur>=0?`Class ${CLASSES[cur][0]} · ${CLASSES[cur][1]}`:'Grade 4 · Chapter 1';
+  const n=Object.keys(BADGES).filter(k=>S.done[k]).length; const el=$('#coinCount'); if(el&&el.textContent!==String(n)){ el.textContent=n; const bx=$('#badgeBox'); bx.classList.remove('pulse'); void bx.offsetWidth; bx.classList.add('pulse'); } }
+function frame(withIns){ STG.classList.toggle('noins',!withIns); }
+/* o: {p1, p2, text, sub, kind, target, done} */
+function guide(o){
+  $('#ins').innerHTML='<div class="iface" id="iface"></div><div class="ibub" id="ibub"><div class="it1">'+o.text+'</div><div class="it2 '+(o.kind||'')+'">'+(o.sub||'')+'</div></div><div class="ipill '+(o.done?'done':'')+'"><div class="p1">'+(o.p1||'')+'</div><div class="p2">'+(o.p2||'')+'</div></div>';
+  G.target=o.target||null; G.dragTo=o.dragTo!=null?o.dragTo:null;
+  hideHand(); clearTimeout(idleT); /* a step change never leaves an old hand or hint behind */
+  if(o.text!==G.text){ G.text=o.text; fb(''); if(!Coach.act) Voice.speak(o.text); }
+  armIdle();
+}
+function fb(text,kind='info'){ const e=$('#fbx'); if(!e) return; if(!text){ e.className='fb'; e.innerHTML=''; return; }
+  e.className='fb '+kind; e.innerHTML='<span class="fbt">'+text+'</span>'; }
+function setFoot({next=null,hint=true}){
+  $('#foot').innerHTML=(hint?'<button class="btn yellow" id="fHint">💡 Hint</button>':'')+'<div class="fb" id="fbx"></div>'+(next?`<button class="btn orange big" id="fNext" ${next.on?'':'disabled'}>${next.label}</button>`:'');
+  if(hint) $('#fHint').onclick=()=>{ beep('pop'); fb('Do this: '+(G.hint||G.text||''),'info'); cue(); armIdle(12000); if(G.text) Voice.speak(G.hint||G.text); };
+  if(next){ $('#fNext').onclick=()=>{ if(!next.on) return; beep('pop'); next.fn(); }; if(next.on) $('#fNext').classList.add('pulse-btn'); } }
+let HINTS=[];
+const FLOW=['home','problem','story','m1','m2','m3','m4','a','b','c','d','end'];
+const SCREENS={};
+function go(name){ destroyViewers(); Coach.stop(); Voice.stop(); hideHand(); closeModal(); G.text=null; S.screen=name; updateProg(); SCREENS[name](); }
+function goNext(){ go(FLOW[FLOW.indexOf(S.screen)+1]); }
+const BADGES={m1:'Shape Sorter',m2:'Block Subtractor',m3:'Triangle Finder',m4:'Step Planner',a:'Cube Painter',b:'Crate Counter',c:'Cake Slicer',d:'Tunnel Builder'};
+/* one tap: the badge card carries the learner straight to the next screen (CT-421) */
+function finish(key,_c,_n,_t,msg){ S.done[key]=true; updateProg(); beep('ok'); confetti(); const nx=FLOW[FLOW.indexOf(S.screen)+1];
+  modal({icon:'🌟',title:'Badge earned: '+BADGES[key],msg,ok:nx==='end'?'Finish':'Next',cb:goNext}); }
+
+/* =====================================================================
+   3D MESH ENGINE (SVG) — turn with buttons or by dragging
+   ===================================================================== */
+function rotPt(p,rx,ry){ const [x,y,z]=p,cy=Math.cos(ry),sy=Math.sin(ry); const x1=x*cy+z*sy,z1=-x*sy+z*cy,cx=Math.cos(rx),sx=Math.sin(rx); return [x1,y*cx-z1*sx,y*sx+z1*cx]; }
+function finalize(m){ const seen=new Set(),e=[]; m.f.forEach(f=>f.forEach((a,i)=>{const b=f[(i+1)%f.length],k=a<b?a+'-'+b:b+'-'+a; if(!seen.has(k)){seen.add(k);e.push([a,b]);}})); m.e=e; return m; }
+function boxMesh(w,h,d){ const x=w/2,y=h/2,z=d/2; return finalize({v:[[-x,-y,-z],[x,-y,-z],[x,y,-z],[-x,y,-z],[-x,-y,z],[x,-y,z],[x,y,z],[-x,y,z]],f:[[4,5,6,7],[1,0,3,2],[0,4,7,3],[5,1,2,6],[3,7,6,2],[0,1,5,4]]}); }
+function pyramidMesh(n,r=1,h=1.7){ const v=[],off=n===4?Math.PI/4:(n===3?Math.PI/2:0); for(let i=0;i<n;i++){const a=off+2*Math.PI*i/n; v.push([r*Math.cos(a),-h/2,r*Math.sin(a)]);} v.push([0,h/2,0]); const f=[Array.from({length:n},(_,i)=>i).reverse()]; for(let i=0;i<n;i++) f.push([i,(i+1)%n,n]); return finalize({v,f}); }
+function flatMesh(pts){ return {v:pts.map(p=>[p[0],p[1],0]),f:[pts.map((_,i)=>i)],e:[],flat:true}; }
+const circlePts=Array.from({length:40},(_,i)=>[Math.cos(i/40*2*Math.PI)*.95,Math.sin(i/40*2*Math.PI)*.95]);
+function drawMesh(mesh,o={}){
+  /* camera convention: stored rx < 0 means "looking from above" (the top face is visible) */
+  const rx=-(o.rx??-.5),ry=o.ry??.6,size=o.size??70,cx=o.cx??150,cy=o.cy??130;
+  const rv=mesh.v.map(p=>rotPt(p,rx,ry)),P=rv.map(p=>[cx+p[0]*size,cy-p[1]*size]),L=[-.3,.6,.75],base=o.color||[255,138,61];
+  const faces=mesh.f.map((idx,i)=>({i,idx,z:idx.reduce((s,k)=>s+rv[k][2],0)/idx.length})).sort((a,b)=>a.z-b.z); let out='';
+  for(const f of faces){
+    const pts=f.idx.map(k=>P[k][0].toFixed(1)+','+P[k][1].toFixed(1)).join(' ');
+    if(o.hidden&&o.hidden.has(f.i)){ if(o.ghost) out+=`<polygon class="ghost" data-f="${f.i}" points="${pts}"/>`; continue; }
+    let nx=0,ny=0,nz=0; const q=f.idx.map(k=>rv[k]);
+    for(let j=0;j<q.length;j++){const a=q[j],b=q[(j+1)%q.length]; nx+=(a[1]-b[1])*(a[2]+b[2]); ny+=(a[2]-b[2])*(a[0]+b[0]); nz+=(a[0]-b[0])*(a[1]+b[1]);}
+    const len=Math.hypot(nx,ny,nz)||1; nx/=len;ny/=len;nz/=len; if(nz<0){nx=-nx;ny=-ny;nz=-nz;}
+    const sh=.64+.36*Math.max(0,nx*L[0]+ny*L[1]+nz*L[2]), c=(o.faceFill&&o.faceFill(f.i))||base;
+    out+=`<polygon points="${pts}" fill="rgb(${Math.min(255,c[0]*sh)|0},${Math.min(255,c[1]*sh)|0},${Math.min(255,c[2]*sh)|0})" fill-opacity="${o.see?.42:1}" stroke="#2b2d42" stroke-width="${mesh.flat?3.5:2.4}" stroke-linejoin="round" ${o.tapF?`data-f="${f.i}" style="cursor:pointer"`:''}/>`;
+  }
+  if(o.edges) mesh.e.forEach((e,k)=>{const a=P[e[0]],b=P[e[1]],mk=o.markE&&o.markE.has(k);
+    out+=`<line x1="${a[0]}" y1="${a[1]}" x2="${b[0]}" y2="${b[1]}" stroke="${mk?'#1f9f6c':'#2b2d42'}" stroke-width="${mk?7:2.6}" stroke-linecap="round" pointer-events="none"/>`;
+    if(o.tapE) out+=`<line data-e="${k}" x1="${a[0]}" y1="${a[1]}" x2="${b[0]}" y2="${b[1]}" stroke="transparent" stroke-width="20" stroke-linecap="round" style="cursor:pointer"/>`; });
+  if(o.verts) P.forEach((p,k)=>{const mk=o.markV&&o.markV.has(k);
+    out+=`<circle cx="${p[0]}" cy="${p[1]}" r="${mk?10:6}" fill="${mk?'#ff8a3d':'#fff'}" stroke="#2b2d42" stroke-width="2.5" pointer-events="none"/>`;
+    if(o.tapV) out+=`<circle data-v="${k}" cx="${p[0]}" cy="${p[1]}" r="16" fill="transparent" style="cursor:pointer"/>`; });
+  return out;
+}
+const miniSVG=(mesh,o={})=>`<svg viewBox="0 0 300 260">${drawMesh(mesh,Object.assign({size:80},o))}</svg>`;
+const viewers=[];
+class Viewer{
+  constructor(el,cfg){ this.el=el; this.cfg=cfg; this.s=cfg.store||{rx:-.5,ry:.6}; el.classList.add('vb'); this.down=null; this.moved=0;
+    this.onDown=e=>{ this.down={x:e.clientX,y:e.clientY}; this.moved=0; };
+    this.onMove=e=>{ if(!this.down) return; const dx=e.clientX-this.down.x,dy=e.clientY-this.down.y; this.moved+=Math.abs(dx)+Math.abs(dy);
+      if(this.moved>8){ this.s.ry+=dx*.012/scale; this.s.rx=Math.max(-1.45,Math.min(1.45,this.s.rx-dy*.012/scale)); this.down={x:e.clientX,y:e.clientY}; this.draw(); } };
+    this.onUp=e=>{ if(!this.down) return; const was=this.moved; this.down=null; if(was<=8&&this.cfg.onTap){ const t=e.target; if(t&&t.dataset){ if(t.dataset.f!==undefined) this.cfg.onTap('f',+t.dataset.f); else if(t.dataset.e!==undefined) this.cfg.onTap('e',+t.dataset.e); else if(t.dataset.v!==undefined) this.cfg.onTap('v',+t.dataset.v); } } };
+    el.addEventListener('pointerdown',this.onDown); addEventListener('pointermove',this.onMove); addEventListener('pointerup',this.onUp); viewers.push(this); this.draw(); }
+  draw(){ const o=Object.assign({},this.cfg.opts?this.cfg.opts():{}); o.rx=this.s.rx; o.ry=this.s.ry; this.el.innerHTML=`<svg viewBox="0 0 300 260" preserveAspectRatio="xMidYMid meet">${drawMesh(this.cfg.mesh(),o)}</svg>`; }
+  destroy(){ removeEventListener('pointermove',this.onMove); removeEventListener('pointerup',this.onUp); } }
+function destroyViewers(){ viewers.splice(0).forEach(v=>v.destroy()); }
+const ROTBTNS=`<div class="rb"><button class="btn sm ghost" data-r="ry:-0.7">⟲ Left</button><button class="btn sm ghost" data-r="ry:0.7">Right ⟳</button><button class="btn sm ghost" data-s="rx:-0.6">👆 Top view</button><button class="btn sm ghost" data-s="rx:0.6">👇 Bottom view</button></div>`;
+function hookRot(v,root){ $$('[data-r]',root).forEach(b=>b.onclick=()=>{const [a,d]=b.dataset.r.split(':'); v.s[a]+=+d; beep('pop'); v.draw();}); $$('[data-s]',root).forEach(b=>b.onclick=()=>{const [a,d]=b.dataset.s.split(':'); v.s[a]=+d; beep('pop'); v.draw();}); }
+
+/* =====================================================================
+   HOME
+   ===================================================================== */
+SCREENS.home=function(){
+  frame(false);
+  $('#work').innerHTML=`<div class="center"><div class="shapes">🔺🧊🔵📦🔷</div><div class="card1"><div class="homerow"><div class="tbig">${TARA_FULL}</div><div style="text-align:left"><h1>Welcome to<br><span>Shape Town!</span></h1>
+   <p class="lead">I am Tara, your guide. The glowing thing shows you what to touch next.</p></div></div></div>
+   <button class="btn orange big" id="goB" style="font-size:40px;padding:16px 56px">Start</button></div>`;
+  setFoot({hint:false}); $('#goB').onclick=()=>{ beep('pop'); go('problem'); };
+};
+
+/* =====================================================================
+   PROBLEM — the Toy Fair emergency (Ci: story hook before any teaching)
+   ===================================================================== */
+const PICO=["📦","🏗️","🔺","🎨"];
+const PROBLEMS=[
+ {t:'Mixed-up toys',d:'Flat cut-outs and solid toys sit in one pile. They need different shelves.',s:'Fix it by telling flat from solid.'},
+ {t:'Broken tower',d:'A crane must take blocks off a 4-block tower. How many blocks are left?',s:'Fix it by subtracting overlaps.'},
+ {t:'Roof tiles',d:'The roof is one big triangle. The tile maker sells only small triangles.',s:'Fix it by splitting the shape.'},
+ {t:'Paint, cake and crates',d:'A painted cube, a cake to slice, a box to open and a crate to order.',s:'Fix it by counting faces and cuts.'}];
+SCREENS.problem=function(){
+  frame(true);
+  $('#work').innerHTML=`<div class="center" style="gap:22px"><div class="card1" style="padding:14px 40px"><div style="font-size:44px;line-height:54px;font-weight:700">The Toy Fair opens <span style="color:var(--orange-d)">tomorrow</span>, but 4 things are broken!</div></div>
+   <div style="display:grid;grid-template-columns:repeat(4,440px);gap:24px">${PROBLEMS.map((p,i)=>`<div class="pn" style="height:440px;text-align:left;border-style:solid;border-color:var(--orange);background:#fff"><div style="font-size:70px;line-height:84px">${PICO[i]}</div><div style="font-size:34px;line-height:42px;font-weight:700">${p.t}</div><div style="font-size:28px;line-height:36px;margin-top:6px;height:150px;overflow:hidden">${p.d}</div><div class="chip now" style="margin-top:6px;white-space:normal;font-size:28px;line-height:36px">${p.s}</div></div>`).join('')}</div></div>`;
+  setFoot({next:{label:'Start the story',on:true,fn:()=>go('story')}});
+  guide({p1:'Class Ci',p2:'The problem',text:'Read the 4 problems. Then press Start the story.',sub:'You will solve each one with a new shape skill.',target:'#fNext'});
+  coach('problem',['Oh no! The Toy Fair opens tomorrow and four jobs are broken.','You will fix them with shape skills.'],()=>{ armIdle(1500); if(G.text) Voice.speak(G.text); });
+};
+
+/* =====================================================================
+   STORY — 4 linked places. Each has a branching choice; both paths lead to the next place.
+   ===================================================================== */
+const SCENES=[
+ {em:'🦉',who:'Professor Geo',place:'Toy Warehouse',text:'A pile of <b>flat paper cut-outs</b> and <b>solid toys</b> is mixed up. Cut-outs go on the envelope shelf and solid toys on the crate shelf. How will you tell them apart?',
+  ch:[{l:'Count the sides I see from the front',res:'From the front, a flat square and a solid cube <b>both look like a square</b>. Counting front-view sides cannot tell them apart. Turning each shape side-on works: a flat shape becomes a thin line.'},{l:'Turn each shape sideways and look',res:'Turning works! Side-on, a flat shape looks like a <b>thin line</b> and a solid shape keeps its <b>body</b>.'}],
+  lesson:'A flat (2D) shape has length and width only. A solid (3D) shape also has height. Packers and designers use this to pick the right box and to read drawings.'},
+ {em:'🦁',who:'Architect Leo',place:'Block Tower',text:'The tower has <b>4 blocks</b>. A crane shaped like <b>2 blocks</b> takes away every tower block it overlaps. You need to know how many blocks are left. Which way do you work?',
+  ch:[{l:'Swing the crane and see what happens',res:'The crane took blocks you did not plan for. Doing steps in any order leaves you guessing, because each step needs the result of the one before.'},{l:'Plan: list, picture, then cross out',res:'A plan works: list the blocks, picture them on a grid, then cross out the overlap. Each step gives the next step what it needs.'}],
+  lesson:'Blocks left = total blocks − overlapping blocks. Builders and game makers plan in this order, so the answer is certain before they cut or build.'},
+ {em:'🦊',who:'Master Maya',place:'Roof Workshop',text:'The roof is <b>one big triangle</b>. The tile maker sells only <b>small triangle tiles</b>. How will you work out the tiles you need?',
+  ch:[{l:'Order one big tile',res:'There is no big tile. Join the midpoints of the three sides and the roof splits into <b>4 smaller triangles</b>.'},{l:'Split the roof into smaller triangles',res:'Splitting works! The roof becomes <b>4 small triangles</b>, and the four together are also one big triangle.'}],
+  lesson:'A big shape is easier to handle as small shapes you already know. Roof frames, bridges and floor tiles are planned this way.'},
+ {em:'🎨',who:'Painter Pip',place:'Workshop',text:'Four jobs are left: a <b>painted 3×3×3 cube</b>, a <b>pyramid crate</b> to order, a <b>round cake</b> to slice and a <b>tunnel box</b> to make. Where do you start?',
+  ch:[{l:'Guess an answer for each job',res:'Guesses can be wrong, and hidden parts are easy to miss. A painted cube cut into 27 has parts you cannot see from the front.'},{l:'Test each job with my hands',res:'Testing works. You will cut the cube, count a pyramid, slice the cake and take faces off the box.'}],
+  lesson:'Look at every part. In a painted 3×3×3 cube, corners have 3 painted faces, edges 2, face-centres 1 and the middle 0. A cut shows the shape inside, and a cube has 3 pairs of opposite faces.'}];
+const CIC=[["👀","🔄"],["🏗️","📝"],["🧱","✂️"],["🎲","🧪"]];
+const ST={i:0,pick:null};
+SCREENS.story=function(){
+  frame(true); const sc=SCENES[ST.i],n=SCENES.length; let body,text,sub,kind='';
+  if(ST.pick===null){ text='Read the problem. Then tap one path.'; sub=`${sc.who} needs your help at the ${sc.place}.`;
+    body=`<div class="speech">${sc.text}</div><div class="choices hl">${sc.ch.map((c,i)=>`<button class="choice" data-i="${i}"><span class="ic">${CIC[ST.i][i]}</span><span>${c.l}</span></button>`).join('')}</div>`; }
+  else { const c=sc.ch[ST.pick]; text=`Read what happened. Then press ${ST.i<n-1?'Next place':'Start Mission 1'}.`; sub=ST.pick===0?'Both paths are fine. This one taught you a lesson.':'Good thinking!'; kind='good';
+    body=`<div class="speech sm"><b>You chose: ${c.l}</b><br>${c.res}</div><div class="lesson">${sc.lesson}</div>`; }
+  $('#work').innerHTML=`<div class="story"><div class="pn sp1"><div class="bigav">${sc.em}</div><div class="sname">${sc.who}</div><div class="splace">${sc.place}</div>
+     <div class="trail">${SCENES.map((s,i)=>`<span class="${i<=ST.i?'v':''}">${i+1}</span>`).join('')}</div></div><div class="sp2">${body}</div></div>`;
+  $$('.choice').forEach(b=>b.onclick=()=>{ beep('pop'); ST.pick=+b.dataset.i; SCREENS.story(); });
+  setFoot({next:ST.pick!==null?{label:ST.i<n-1?'Next place':'Start Mission 1',on:true,fn:()=>{ if(ST.i<n-1){ ST.i++; ST.pick=null; SCREENS.story(); } else { S.done.story=true; go('m1'); } }}:null});
+  guide({p1:'Class Ci',p2:`Place ${ST.i+1} of ${n}`,text,sub,kind,target:ST.pick!==null?'#fNext':'.choices'});
+  coach('story',['I am Tara. Visit 4 places to see why shape skills matter.'],()=>{ armIdle(1500); if(G.text) Voice.speak(G.text); });
+};
+
+/* =====================================================================
+   MISSION 1 — SHAPE SORTING (6 shapes × 3 steps, fixed order)
+   ===================================================================== */
+const M1ITEMS=[
+ {id:'cube',name:'Square Box (Cube)',type:3,front:'a square',mesh:boxMesh(1.5,1.5,1.5),color:[255,138,61]},
+ {id:'tri',name:'Flat Triangle',type:2,front:'a triangle',mesh:flatMesh([[0,1.05],[1.05,-.85],[-1.05,-.85]]),color:[40,200,230]},
+ {id:'cuboid',name:'Brick (Cuboid)',type:3,front:'a rectangle',mesh:boxMesh(2.2,1.2,1.3),color:[255,111,165]},
+ {id:'circ',name:'Flat Circle',type:2,front:'a circle',mesh:flatMesh(circlePts),color:[62,166,255]},
+ {id:'pyr',name:'Square-based Pyramid',type:3,front:'a triangle',mesh:pyramidMesh(4,1.05,1.9),color:[143,107,255]},
+ {id:'sq',name:'Flat Square',type:2,front:'a square',mesh:flatMesh([[-.85,-.85],[.85,-.85],[.85,.85],[-.85,.85]]),color:[60,207,145]}];
+const M1={i:0,ph:0,angle:0,placed:{}};
+SCREENS.m1=function(){
+  frame(true); HINTS=['Front view can fool you: a cube and a flat square both look like a square.','Turn the shape all the way to 90° before you decide.','Side-on, a flat shape is a thin line. A solid shape keeps its body.'];
+  const fin=M1.i>=6, it=M1ITEMS[Math.min(M1.i,5)]; let text,sub,kind='';
+  if(fin){ text='All 6 shapes are sorted! Press “Next mission”.'; sub='2D = flat (length, width). 3D = solid (length, width, height).'; kind='good'; }
+  else if(M1.ph===0){ text='Tap the glowing shape in the pile.'; sub=`Shape ${M1.i+1} of 6. The pile only shows the front view.`; }
+  else if(M1.ph===1){ text='Drag the “Turn” slider to the right, to 90°.'; sub=`Watch the ${it.name} turn side-on.`; }
+  else { text='Thin line or solid body? Press the matching shelf.'; sub='Thin line side-on = Flat (2D). Keeps a body side-on = Solid (3D).'; }
+  const pile=M1ITEMS.filter(x=>!M1.placed[x.id]);
+  $('#work').innerHTML=`<div class="m1g">
+   <div class="pn pile"><div class="pt">🧺 Mixed-up pile</div>${pile.map(x=>`<button class="it ${(!fin&&x.id===it.id&&M1.ph===0)?'hl':'lock'}" data-id="${x.id}">${miniSVG(x.mesh,{rx:0,ry:0,color:x.color,size:78})}<span>${x.name}</span></button>`).join('')||'<div class="note">✅ The pile is empty!</div>'}</div>
+   <div class="pn col" style="gap:12px"><div class="pt" style="margin:0">🔍 Inspection table</div>
+     <div class="vb" id="m1v" style="height:322px;cursor:default"></div>
+     <div class="turnbox ${M1.ph===1?'hl':(M1.ph===0||fin?'lock':'')}"><div class="tl">🔄 Turn: <span id="angL">${M1.angle}°</span> <span class="note">(front view → side-on view)</span></div><input type="range" id="turn" min="0" max="90" value="${M1.angle}"></div>
+     <div id="m1i" style="height:62px;font-size:28px;line-height:30px;overflow:hidden"></div>
+     <div class="row2" id="shelfRow" style="gap:16px;flex-wrap:nowrap"><button class="btn green ${M1.ph===2?'hl':'lock'}" id="b2" style="flex:1">📄 Flat shelf (2D)</button><button class="btn purple ${M1.ph===2?'hl':'lock'}" id="b3" style="flex:1">🧊 Solid shelf (3D)</button></div></div>
+   <div class="pn"><div class="shelf s2"><h5>📄 Flat (2D)</h5>${M1ITEMS.filter(x=>M1.placed[x.id]===2).map(x=>`<div class="got">${miniSVG(x.mesh,{color:x.color,size:78})}${x.name}</div>`).join('')}</div><div class="shelf s3"><h5>🧊 Solid (3D)</h5>${M1ITEMS.filter(x=>M1.placed[x.id]===3).map(x=>`<div class="got">${miniSVG(x.mesh,{color:x.color,size:78})}${x.name}</div>`).join('')}</div></div></div>`;
+  function drawV(){ const a=M1.angle*D2R;
+    $('#m1v').innerHTML=(fin||M1.ph===0)?`<svg viewBox="0 0 300 260"><text x="150" y="138" text-anchor="middle" font-size="22" fill="#9aa0b8">${fin?'All sorted!':'Tap the glowing shape'}</text></svg>`:`<svg viewBox="0 0 300 260">${drawMesh(it.mesh,{size:82,color:it.color,rx:-a*.3,ry:a})}</svg>`;
+    $('#m1i').innerHTML=fin||M1.ph===0?'':(M1.angle>=88?(it.type===2?'👀 Side-on it is a <b>thin line</b>: length and width only, no height.':'👀 Side-on it still has a <b>body</b>: length, width and height.'):`Front view: it looks like <b>${it.front}</b>. Keep turning to 90°.`); }
+  drawV();
+  $$('.pile .it').forEach(b=>b.onclick=()=>{ if(M1.ph!==0||fin||b.dataset.id!==it.id) return; M1.ph=1; M1.angle=0; beep('pop'); SCREENS.m1(); });
+  $('#turn').oninput=e=>{ if(M1.ph!==1) return; M1.angle=+e.target.value; $('#angL').textContent=M1.angle+'°'; drawV(); if(M1.angle>=88){ M1.ph=2; M1.angle=90; beep('ok'); SCREENS.m1(); } };
+  const sortTo=t=>{ if(M1.ph!==2) return; if(it.type===t){ M1.placed[it.id]=t; award('m1'+it.id,25); beep('ok'); M1.i++; M1.ph=0; M1.angle=0; SCREENS.m1(); fb(`Correct! The ${it.name} is ${t===2?'flat (2D)':'solid (3D)'}.`,'good');
+      if(M1.i>=6) finish('m1','m1done',0,'All 6 shapes sorted!','Turning a shape side-on tells you its kind. A flat shape becomes a thin line. A solid shape keeps its body.'); }
+    else { beep('no'); fb(`Look again: side-on, the ${it.name} ${it.type===2?'became a thin line, so it is flat (2D)':'kept a body, so it is solid (3D)'}. Try the other shelf.`,'try'); } };
+  $('#b2').onclick=()=>sortTo(2); $('#b3').onclick=()=>sortTo(3);
+  setFoot({});
+  guide({p1:fin?'Class Ci':`Class Ci · shape ${M1.i+1} of 6`,p2:fin?'Done! ✓':`Step ${M1.ph+1} of 3`,done:fin,text,sub,kind,target:M1.ph===1?'.turnbox':(M1.ph===2?'#shelfRow':null),dragTo:90});
+  coach('m1',['Mission 1: the warehouse pile is mixed up.','Some shapes are flat cut-outs. Some are solid toys.','You will turn each shape side-on, then put it on the right shelf.'],()=>{ armIdle(1500); if(G.text) Voice.speak(G.text); });
+};
+
+/* =====================================================================
+   MISSION 2 — 3D SUBTRACTION LAB
+   ph 0 read A; 1/2 goal "leave 2" (slide/subtract); 3/4 "leave 3"; 5/6 "leave 4"; 7 done
+   ===================================================================== */
+const M2={ph:0,read:[],bx:1,by:1,horiz:true,removed:[],locked:false};
+const M2A=[[2,2],[3,2],[2,3],[3,3]],M2T=[2,3,4];
+const m2B=()=>M2.horiz?[[M2.bx,M2.by],[M2.bx+1,M2.by]]:[[M2.bx,M2.by],[M2.bx,M2.by+1]];
+const m2Ov=()=>{ const B=m2B(); return M2A.filter(a=>B.some(b=>b[0]===a[0]&&b[1]===a[1])); };
+function m2Iso(){
+  const ox=300,oy=50,tw=46,th=23,H=44,Pp=(x,y,z=0)=>[ox+(x-y)*tw,oy+(x+y)*th-z*H],pt=p=>p[0].toFixed(1)+','+p[1].toFixed(1); let s='',labels='';
+  const ov=m2Ov(),B=m2B(),show=M2.ph>0&&!M2.locked;
+  for(let i=0;i<4;i++)for(let j=0;j<4;j++){ const c=[Pp(i,j),Pp(i+1,j),Pp(i+1,j+1),Pp(i,j+1)]; s+=`<polygon points="${c.map(pt).join(' ')}" fill="${(i+j)%2?'#fff3c4':'#ffe9a0'}" stroke="#d9c37a" stroke-width="2"/>`; }
+  for(let i=0;i<4;i++){ const a=Pp(i+.5,4.55),b=Pp(4.55,i+.5); s+=`<text x="${a[0]-6}" y="${a[1]+12}" text-anchor="middle" font-size="15" font-weight="700" fill="#d96a1f">x=${i+1}</text><text x="${b[0]+6}" y="${b[1]+12}" text-anchor="middle" font-size="15" font-weight="700" fill="#1d7fd6">y=${i+1}</text>`; }
+  const cube=(i,j,top,l,r,st,op=1,dash='',extra='')=>{ const T=[Pp(i,j,1),Pp(i+1,j,1),Pp(i+1,j+1,1),Pp(i,j+1,1)],Lf=[Pp(i,j+1,1),Pp(i+1,j+1,1),Pp(i+1,j+1,0),Pp(i,j+1,0)],R=[Pp(i+1,j,1),Pp(i+1,j+1,1),Pp(i+1,j+1,0),Pp(i+1,j,0)];
+    return `<g ${extra} opacity="${op}" stroke="${st}" stroke-width="2.4" stroke-linejoin="round" ${dash?`stroke-dasharray="${dash}"`:''}><polygon points="${Lf.map(pt).join(' ')}" fill="${l}"/><polygon points="${R.map(pt).join(' ')}" fill="${r}"/><polygon points="${T.map(pt).join(' ')}" fill="${top}"/></g>`; };
+  const cells=[]; M2A.forEach((a,k)=>cells.push({a,t:'A',k})); if(show) B.forEach(b=>cells.push({a:b,t:'B'}));
+  cells.sort((p,q)=>(p.a[0]+p.a[1])-(q.a[0]+q.a[1])||(p.t==='B')-(q.t==='B'));
+  const labelled=new Set();
+  for(const c of cells){ const [x,y]=c.a,i=x-1,j=y-1,key=x+','+y;
+    if(c.t==='A'){ if(M2.removed.some(r=>r[0]===x&&r[1]===y)) continue; const hit=show&&ov.some(o=>o[0]===x&&o[1]===y), glow=M2.ph===0&&!M2.read.includes(c.k);
+      s+=cube(i,j,hit?'#ff8a8a':'#ffb36b',hit?'#e24b4b':'#ff8a3d',hit?'#c93a3a':'#d96a1f','#2b2d42',1,'',`data-bk="${c.k}" ${glow?'class="svghl" style="cursor:pointer"':''}`);
+      if(M2.read.includes(c.k)||M2.ph>0) labelled.add(key); }
+    else { const onA=M2A.some(a=>a[0]===x&&a[1]===y)&&!M2.removed.some(r=>r[0]===x&&r[1]===y);
+      s+= onA ? cube(i,j,'none','none','none','#1d7fd6',1,'6 4') /* crane over a tower block: outline only, so the red overlap stays red */
+              : cube(i,j,'#9fd4ff','#5db4ff','#3e96e6','#1d7fd6',.6,'6 4'); labelled.add(key); } }
+  labelled.forEach(key=>{ const [x,y]=key.split(',').map(Number),t=Pp(x-.5,y-.5,1); labels+=`<text x="${t[0]}" y="${t[1]+5}" text-anchor="middle" font-size="14" font-weight="700" fill="#fff" stroke="#2b2d42" stroke-width="3" paint-order="stroke" pointer-events="none">(${x},${y})</text>`; });
+  return `<svg viewBox="80 14 440 266" style="width:100%;height:100%">${s}${labels}</svg>`;
+}
+SCREENS.m2=function(){
+  frame(true); HINTS=['Break a complex shape into single unit blocks.','Check coordinates before subtracting: blocks overlap only if x and y both match.','Blocks left = 4 − red blocks. To leave 2 blocks, 2 blocks must be red.'];
+  const ph=M2.ph,g=ph>0?Math.min(2,Math.floor((ph-1)/2)):0,T=M2T[g],ov=m2Ov().length,left=4-ov; let text,sub,kind='';
+  if(ph===0){ text='Tap each glowing orange block to read its coordinates.'; sub=`Model A is the tower. You have read ${M2.read.length} of its 4 blocks.`; }
+  else if(ph===7){ text='All 3 goals done! Press “Next mission”.'; sub='Blocks left = total blocks − overlapping blocks.'; kind='good'; }
+  else if(ph%2===1){ text=['Goal 1: leave exactly 2 blocks. Move the blue crane.','Goal 2: leave exactly 3 blocks. Move the crane again.','Goal 3: leave all 4 blocks. Move the crane.'][g]; sub=`Red (overlapping) blocks now: ${ov}. Blocks left would be 4 − ${ov} = ${left}.`; }
+  else { text='Press the glowing green “Subtract” button.'; sub=`4 − ${ov} red blocks = ${T} blocks left. That matches the goal!`; kind='good'; }
+  const B=m2B(),can=ph>0&&ph<7&&!M2.locked,subOn=ph>0&&ph%2===0&&ph<7&&!M2.locked;
+  $('#work').innerHTML=`<div class="m2g"><div class="pn col" style="padding:6px 10px;gap:4px"><div style="height:580px">${m2Iso()}</div><div class="note" style="text-align:center">🟧 Model A = tower &nbsp; 🟦 see-through Model B = crane &nbsp; 🟥 red = overlap</div></div>
+    <div class="col">
+     <div class="pn" style="height:212px"><div class="pt">📋 Coordinates (x, y)</div><div style="white-space:nowrap"><b style="color:var(--orange-d)">Model A:</b> ${M2A.map((a,k)=>M2.read.includes(k)||ph>0?`<span class="chip">(${a})</span>`:'<span class="chip">?</span>').join('')}</div><div style="white-space:nowrap"><b style="color:var(--blue-d)">Model B:</b> ${ph>0?B.map(a=>`<span class="chip">(${a})</span>`).join(''):'<span class="note">appears after you read A</span>'}</div><div style="white-space:nowrap"><b style="color:var(--red)">Overlap:</b> ${can?(ov?m2Ov().map(a=>`<span class="chip">(${a})</span>`).join(''):'<span class="note">none</span>'):'<span class="note">—</span>'}</div></div>
+     <div class="pn" style="height:128px"><div class="pt">🎯 Goals</div><div style="white-space:nowrap">${M2T.map((t,i)=>{ const dn=ph>=2*i+3; return `<span class="chip ${dn?'ok':(ph>0&&g===i?'now':'')}">${dn?'✅':(ph>0&&g===i?'👉':'⏳')} ${t===4?'leave all 4':'leave '+t}</span>`; }).join('')}</div></div>
+     <div class="pn ${can?(ph%2===1?'hl':''):'lock'}" id="dpadPn" style="height:216px;display:flex;align-items:center;justify-content:center;gap:24px"><div class="dpad"><span></span><button class="btn purple" data-mv="0,1">▲</button><span></span><button class="btn purple" data-mv="-1,0">◀</button><button class="btn ghost" id="rot" title="Turn the crane">⟳</button><button class="btn purple" data-mv="1,0">▶</button><span></span><button class="btn purple" data-mv="0,-1">▼</button><span></span></div><div class="note" style="width:250px">▲ ▼ change <b>y</b><br>◀ ▶ change <b>x</b><br>⟳ turns the crane</div></div>
+     <button class="btn green big ${subOn?'hl':'lock'}" id="sub" style="height:76px">➖ Subtract</button></div></div>`;
+  $$('[data-bk]').forEach(el=>el.onclick=()=>{ if(M2.ph!==0) return; const k=+el.dataset.bk; if(M2.read.includes(k)) return; M2.read.push(k); beep('pop'); fb(`Block at x = ${M2A[k][0]}, y = ${M2A[k][1]}.`,'info'); if(M2.read.length===4){ M2.ph=1; beep('ok'); } SCREENS.m2(); if(M2.ph===1) fb('All 4 coordinates read. The blue crane (Model B) has appeared.','good'); });
+  const sync=()=>{ const gg=Math.floor((M2.ph-1)/2),l=4-m2Ov().length; M2.ph=2*gg+1+(l===M2T[gg]?1:0); SCREENS.m2(); };
+  $$('[data-mv]').forEach(b=>b.onclick=()=>{ if(!can) return; const [dx,dy]=b.dataset.mv.split(',').map(Number),mx=M2.horiz?3:4,my=M2.horiz?4:3,nx=M2.bx+dx,ny=M2.by+dy;
+    if(nx<1||nx>mx||ny<1||ny>my){ beep('no'); fb('The crane cannot leave the 4 × 4 grid.','try'); return; } M2.bx=nx; M2.by=ny; beep('pop'); sync(); });
+  $('#rot').onclick=()=>{ if(!can) return; M2.horiz=!M2.horiz; M2.bx=Math.min(M2.bx,M2.horiz?3:4); M2.by=Math.min(M2.by,M2.horiz?4:3); beep('pop'); sync(); };
+  $('#sub').onclick=()=>{ if(!subOn) return; const gg=Math.floor((M2.ph-1)/2),o=m2Ov(); M2.removed=o.map(x=>x.slice()); M2.locked=true; beep('ok'); award('m2g'+gg,gg===0?50:25); SCREENS.m2();
+    fb(`${o.length} block${o.length===1?'':'s'} removed: 4 − ${o.length} = ${4-o.length} blocks left. Goal reached!`,'good');
+    setTimeout(()=>{ Object.assign(M2,{removed:[],locked:false,bx:2,by:3,horiz:true}); /* restart over the tower (2 overlap) so the next goal always needs a move */ M2.ph=2*gg+3; if(M2.ph<7&&4-m2Ov().length===M2T[gg+1]) M2.ph++; if(M2.ph>=7){ M2.ph=7; SCREENS.m2(); finish('m2','m2done',0,'Subtraction expert!','You placed the crane, found the overlap and subtracted: <b>blocks left = total − overlapping</b>.'); } else SCREENS.m2(); },1900); };
+  setFoot({});
+  guide({p1:'Class C1',p2:ph===7?'Done! ✓':`Step ${ph+1} of 7`,done:ph===7,text,sub,kind,target:ph%2===1&&ph<7?'[data-mv="1,0"]':null});
+  coach('m2',['Mission 2: Architect Leo’s tower has 4 blocks.','A crane removes every tower block it overlaps.','You will use coordinates to place the crane exactly.'],()=>{ armIdle(1500); if(G.text) Voice.speak(G.text); });
+};
+
+/* =====================================================================
+   MISSION 3 — TRIANGLE DISCOVERY
+   ph 0-7: (tap piece, save) × 4; 8 tap Top+Center; 9 clear; 10 tap all four; 11 save; 12 done
+   ===================================================================== */
+const TP={A:[100,10],B:[145,90],C:[55,90],D:[100,170],E:[10,170],F:[190,170]};
+const TPIECES={T:{v:'ABC',name:'Top',col:'#6ec6ff'},L:{v:'CDE',name:'Left',col:'#b49bff'},R:{v:'BFD',name:'Right',col:'#ff9cc2'},K:{v:'CBD',name:'Center',col:'#ffb36b'}};
+const M3={ph:0,sel:[],saved:[]},M3SEQ=['T','L','R','K'];
+function analyse(keys){
+  if(!keys.length) return {sides:0,text:''};
+  const cnt={}; keys.forEach(k=>{const v=TPIECES[k].v; for(let i=0;i<3;i++){const a=v[i],b=v[(i+1)%3],e=a<b?a+b:b+a; cnt[e]=(cnt[e]||0)+1;}});
+  const out=Object.keys(cnt).filter(e=>cnt[e]===1),adj={}; out.forEach(e=>{(adj[e[0]]=adj[e[0]]||[]).push(e[1]);(adj[e[1]]=adj[e[1]]||[]).push(e[0]);}); const vs=Object.keys(adj);
+  if(vs.some(v=>adj[v].length!==2)) return {sides:-1,text:'These pieces touch only at a corner, so they do not make one shape.'};
+  const loop=[vs[0]]; let prev=null,cur=vs[0]; while(true){const nx=adj[cur].find(x=>x!==prev)||adj[cur][0]; if(nx===loop[0])break; loop.push(nx);prev=cur;cur=nx; if(loop.length>12)break;}
+  let corners=0; for(let i=0;i<loop.length;i++){const p=TP[loop[(i+loop.length-1)%loop.length]],q=TP[loop[i]],r=TP[loop[(i+1)%loop.length]]; if(Math.abs((q[0]-p[0])*(r[1]-q[1])-(q[1]-p[1])*(r[0]-q[0]))>1e-6) corners++;}
+  return {sides:corners,text:`The outline has <b>${corners} sides</b>: `+(corners===3?'it is a <b>triangle</b> ✅':'it is <b>not</b> a triangle.')};
+}
+SCREENS.m3=function(){
+  frame(true); HINTS=['Break a complex shape into smaller shapes you know.','A triangle’s outline has exactly 3 sides. Count the sides of what you selected.','Pieces that touch only at a corner do not join into one shape.'];
+  const ph=M3.ph; let allowed=[],text,sub='',kind='';
+  if(ph<8){ const k=M3SEQ[Math.floor(ph/2)],nm=TPIECES[k].name; if(ph%2===0){ allowed=[k]; text=`Tap the glowing ${nm} piece of the big triangle.`; sub=`Small triangle ${Math.floor(ph/2)+1} of 4. Its outline will be counted for you.`; } else { text='3 sides: a triangle! Press the green “Save triangle”.'; sub='Saving adds it to your list on the right.'; kind='good'; } }
+  else if(ph===8){ allowed=['T','K']; text='Tap the glowing Top piece and Center piece.'; sub=M3.sel.length?'Select both. Then look at the side count.':'Do two pieces joined together make a triangle?'; }
+  else if(ph===9){ text='Top + Center has 4 sides: not a triangle. Press “Clear”.'; sub='Not every group of pieces makes a triangle.'; kind='try'; }
+  else if(ph===10){ allowed=['T','L','R','K']; text='Now tap all four pieces, one by one.'; sub=`Selected ${M3.sel.length} of 4.`; }
+  else if(ph===11){ text='All four together: 3 sides! Press “Save triangle”.'; sub='The big triangle is also a triangle.'; kind='good'; }
+  else { text='All 5 triangles found! Press “Next mission”.'; sub='4 small triangles + 1 big triangle = 5 triangles.'; kind='good'; }
+  const r=analyse(M3.sel),canSave=(ph<8&&ph%2===1)||ph===11,canClear=ph===9,hlSet=new Set(allowed);
+  let svg='<polygon points="100,10 190,170 10,170" fill="none" stroke="#2b2d42" stroke-width="3.5" stroke-linejoin="round"/>';
+  Object.entries(TPIECES).forEach(([k,p])=>{ const pts=p.v.split('').map(c=>TP[c].join(',')).join(' '),sel=M3.sel.includes(k),sv=M3.saved.includes(k),ok=hlSet.has(k);
+    svg+=`<polygon data-k="${k}" class="${ok&&!sel?'svghl':''}" points="${pts}" fill="${sel?'#ffd23f':(sv?p.col:'#f3efe0')}" stroke="${ok&&!sel?'#ff8a3d':(sel?'#d9a900':'#2b2d42')}" stroke-width="${ok||sel?4:2.2}" stroke-linejoin="round" style="cursor:${ok?'pointer':'default'}"/>`;
+    const c=p.v.split('').reduce((a,ch)=>[a[0]+TP[ch][0]/3,a[1]+TP[ch][1]/3],[0,0]); svg+=`<text x="${c[0]}" y="${c[1]+4}" text-anchor="middle" font-size="11" font-weight="700" fill="#2b2d42" pointer-events="none">${p.name}</text>`; });
+  const small=M3SEQ.filter(k=>M3.saved.includes(k)).length,big=M3.saved.includes('TLRK');
+  $('#work').innerHTML=`<div class="m3g"><div class="pn" style="padding:6px"><svg id="tsvg" viewBox="0 0 200 180" style="width:100%;height:100%">${svg}</svg></div>
+   <div class="col">
+    <div class="pn" style="height:236px"><div class="pt">🔎 What you selected</div><div style="height:44px;white-space:nowrap">${M3.sel.length?M3.sel.map(k=>`<span class="chip">${TPIECES[k].name}</span>`).join(''):'<span class="note">Nothing selected yet.</span>'}</div><div style="font-size:28px;line-height:36px;margin-top:10px;height:76px;overflow:hidden">${M3.sel.length?r.text:'<span class="note">Tap a glowing piece to select it.</span>'}</div></div>
+    <div class="row2" style="gap:20px;flex-wrap:nowrap;padding:4px 0 10px"><button class="btn green big ${canSave?'hl':'lock'}" id="tsave" style="flex:1">💾 Save triangle</button><button class="btn ghost big ${canClear?'hl':'lock'}" id="tclr" style="flex:1">🧹 Clear</button></div>
+    <div class="pn" style="flex:1"><div class="pt">🏆 Triangles saved: ${small+(big?1:0)}</div><div>${M3SEQ.filter(k=>M3.saved.includes(k)).map(k=>`<span class="chip ok">▲ ${TPIECES[k].name} piece</span>`).join('')}${big?'<span class="chip ok">🔺 Big triangle (all 4)</span>':''}${small+(big?1:0)===0?'<span class="note">None yet.</span>':''}</div><div class="note" style="margin-top:12px">Small triangles: ${small} of 4${big?' • Big triangle: 1 • Total: 5':''}</div></div></div></div>`;
+  $$('#tsvg polygon[data-k]').forEach(el=>el.onclick=()=>{ const k=el.dataset.k; if(!hlSet.has(k)) return; const i=M3.sel.indexOf(k); if(i>=0) M3.sel.splice(i,1); else M3.sel.push(k); beep('pop');
+    if(ph<8&&ph%2===0&&M3.sel.length===1) M3.ph++; else if(ph===8&&M3.sel.length===2) M3.ph=9; else if(ph===10&&M3.sel.length===4) M3.ph=11; SCREENS.m3(); });
+  $('#tsave').onclick=()=>{ if(!canSave) return; const key=ph===11?'TLRK':M3.sel[0]; M3.saved.push(key); M3.sel=[]; beep('ok'); M3.ph++;
+    if(ph===7){ M3.ph=8; SCREENS.m3(); fb('4 small triangles saved. Now test groups of pieces.','good'); }
+    else if(ph===11){ award('m3b',25); SCREENS.m3(); finish('m3','m3done',0,'All 5 triangles found!','4 small triangles + the big triangle made of all 4 pieces = <b>5 triangles</b>. A group is a triangle only when its outline has exactly 3 sides.'); }
+    else { SCREENS.m3(); fb(`Saved! ${M3SEQ.filter(k=>M3.saved.includes(k)).length} of 4 small triangles found.`,'good'); } };
+  $('#tclr').onclick=()=>{ if(!canClear) return; M3.sel=[]; M3.ph=10; beep('pop'); SCREENS.m3(); };
+  setFoot({});
+  guide({p1:'Class C1',p2:ph===12?'Done! ✓':`Step ${ph+1} of 12`,done:ph===12,text,sub,kind});
+  coach('m3',['Mission 3: the roof is one big triangle.','Master Maya cut it into smaller pieces.','You will find every triangle hiding inside it.'],()=>{ armIdle(1500); if(G.text) Voice.speak(G.text); });
+};
+
+/* =====================================================================
+   MISSION 4 — PROBLEM SEQUENCING ROBOT
+   ===================================================================== */
+const M4CARDS={1:{ic:'📝',t:'List all known unit blocks and coordinates',need:'nothing',give:'the block list'},2:{ic:'🧭',t:'Visualize the spatial grid orientation',need:'the block list',give:'a grid picture'},3:{ic:'❌',t:'Cross out overlapping blocks and calculate the remainder',need:'the grid picture',give:'the answer'}};
+const M4={slots:[null,null,null],tray:[3,1,2],mem:{},running:false,state:['','',''],ok:false,fail:null};
+const M4A=[[2,2],[3,2],[2,3],[3,3]],M4B=[[2,2],[3,2]];
+function m4Grid(cross){ let s=''; for(let y=4;y>=1;y--)for(let x=1;x<=4;x++){ const a=M4A.some(c=>c[0]===x&&c[1]===y),b=M4B.some(c=>c[0]===x&&c[1]===y),px=(x-1)*52+4,py=(4-y)*52+4;
+  s+=`<rect x="${px}" y="${py}" width="48" height="48" rx="8" fill="${a?'#ffb36b':'#fff3c4'}" stroke="#2b2d42" stroke-width="2"/>`; if(b) s+=`<rect x="${px+6}" y="${py+4}" width="36" height="30" rx="6" fill="#3ea6ff" fill-opacity=".55" stroke="#1d7fd6" stroke-width="2" stroke-dasharray="5 3"/>`;
+  if(cross&&a&&b) s+=`<path d="M${px+12} ${py+8}L${px+36} ${py+30}M${px+36} ${py+8}L${px+12} ${py+30}" stroke="#ff5d5d" stroke-width="5" stroke-linecap="round"/>`; s+=`<text x="${px+24}" y="${py+45}" text-anchor="middle" font-size="9" font-weight="600" fill="#2b2d42">(${x},${y})</text>`; } return `<svg viewBox="0 0 212 212" style="width:220px;height:220px">${s}</svg>`; }
+SCREENS.m4=function(){
+  frame(true); HINTS=['For each card ask: what does it NEED before it can start?','You cannot cross out overlaps until you have a picture of both models.','You cannot draw a grid until you know which blocks exist and where they are.'];
+  const full=!M4.slots.includes(null); let text,sub,kind='';
+  if(M4.ok){ text='The robot solved it! Press “Next”.'; sub='The plan that works: list → picture → cross out and calculate.'; kind='good'; }
+  else if(M4.running){ text='The robot is following your plan…'; sub='Watch each step light up.'; }
+  else if(M4.fail){ text=`Stuck at step ${M4.fail.i+1}! Tap a slot to take its card back.`; sub='Then put the cards in a new order and run again.'; kind='try'; }
+  else if(!full){ text='Tap the cards to fill plan slots 1, 2 and 3.'; sub='Read what each card NEEDS and GIVES. A step can only run when its need is ready.'; }
+  else { text='Press the glowing green “Run the robot” button.'; sub='The robot runs slot 1, then slot 2, then slot 3.'; }
+  const m=M4.mem,stp=M4.ok?3:(full?2:1);
+  $('#work').innerHTML=`<div class="m4g"><div class="pn ${!full&&!M4.running&&!M4.ok?'hl':''}"><div class="pt">🧩 Step cards</div>${M4.tray.map(id=>`<button class="stepcard" data-id="${id}"><span class="ic">${M4CARDS[id].ic}</span><span>${M4CARDS[id].t}<small>Needs: ${M4CARDS[id].need}<br>Gives: ${M4CARDS[id].give}</small></span></button>`).join('')||'<div class="note">All cards are in the plan.</div>'}</div>
+   <div class="pn"><div class="pt">📥 Plan (runs top to bottom)</div>${M4.slots.map((id,i)=>`<div class="slot ${id?'f':''} ${M4.state[i]}" data-i="${i}"><span class="sn">${i+1}</span>${id?`<span class="sic">${M4CARDS[id].ic}</span><span>${M4CARDS[id].t}</span>`:'<span class="note">Empty: tap a card</span>'}</div>`).join('')}
+     <button class="btn green big ${full&&!M4.running&&!M4.ok&&!M4.fail?'hl':'lock'}" id="run" style="width:100%">▶ Run the robot</button></div>
+   <div class="pn"><div class="pt">${M4.ok?'🥳':M4.fail?'😵':'🤖'} Robot memory</div>
+     <div class="mem">${m.blocks?'<div>📝 A = (2,2) (3,2) (2,3) (3,3)</div><div>&nbsp;&nbsp;&nbsp;B = (2,2) (3,2)</div>':''}${m.grid?'<div>🧭 Grid picture drawn.</div>':''}${m.ans!==undefined?`<div>❌ Overlap = 2 → 4 − 2 = <b>${m.ans}</b> ✅</div>`:''}${m.err?`<div style="color:#ffb3b3">⚠ ${m.err}</div>`:''}${!m.blocks&&!m.err?'<div style="opacity:.6">Memory is empty.</div>':''}</div>
+     <div style="display:flex;justify-content:center;margin-top:12px;height:224px">${m.grid?m4Grid(m.ans!==undefined):''}</div></div></div>`;
+  $$('.stepcard').forEach(b=>b.onclick=()=>{ if(M4.running||M4.ok) return; const i=M4.slots.indexOf(null); if(i<0) return; const id=+b.dataset.id; M4.slots[i]=id; M4.tray=M4.tray.filter(x=>x!==id); Object.assign(M4,{state:['','',''],fail:null,mem:{}}); beep('pop'); SCREENS.m4(); });
+  $$('.slot').forEach(b=>b.onclick=()=>{ if(M4.running||M4.ok) return; const i=+b.dataset.i,id=M4.slots[i]; if(!id) return; M4.slots[i]=null; M4.tray.push(id); Object.assign(M4,{state:['','',''],fail:null,mem:{}}); beep('pop'); SCREENS.m4(); });
+  $('#run').onclick=()=>{ if(!full||M4.running||M4.ok||M4.fail) return; Object.assign(M4,{mem:{},state:['','',''],fail:null,running:true}); SCREENS.m4(); let i=0;
+    const nx=()=>{ if(i>=3){ M4.running=false; M4.ok=true; SCREENS.m4(); finish('m4','m4done',50,'Perfect sequencing! +50 🪙','The order that works: <b>1) list the blocks, 2) picture the grid, 3) cross out the overlap and calculate.</b> Each step needs the result of the step before.'); return; }
+      const id=M4.slots[i]; M4.state[i]='run'; SCREENS.m4();
+      setTimeout(()=>{ let err=null; if(id===1) M4.mem.blocks=true; else if(id===2){ if(!M4.mem.blocks) err='I cannot draw the grid: I do not know the blocks yet.'; else M4.mem.grid=true; } else { if(!M4.mem.blocks) err='I cannot cross out: I have no block list and no picture.'; else if(!M4.mem.grid) err='I cannot see the overlap: no grid picture yet.'; else M4.mem.ans=2; }
+        if(err){ M4.state[i]='bad'; M4.mem.err=err; M4.running=false; M4.fail={i,msg:err}; beep('no'); SCREENS.m4(); fb(err,'try'); return; }
+        M4.state[i]='okk'; beep('pop'); i++; SCREENS.m4(); setTimeout(nx,500); },800); }; nx(); };
+  setFoot({});
+  guide({p1:'Class C2',p2:M4.ok?'Done! ✓':`Step ${stp} of 3`,done:M4.ok,text,sub,kind,target:M4.fail?'.slot.bad':null});
+  coach('m4',['Mission 4: this robot follows a plan exactly, in order.','Each card says what it needs and what it gives.','Build a plan the robot can finish without getting stuck.'],()=>{ armIdle(1500); if(G.text) Voice.speak(G.text); });
+};
+
+/* =====================================================================
+   STATION A — PAINT LAB (0 dip, 1 cut, 2 top, 3 middle, 4 bottom, 5 done)
+   ===================================================================== */
+const PA={ph:0,seen:{},cur:null,view:{rx:-.5,ry:.6},view2:{rx:-.5,ry:.6}};
+const KNAME={3:'a corner cube',2:'an edge cube',1:'a face-centre cube',0:'the middle cube'},LAYERNAME={2:'Top',1:'Middle',0:'Bottom'};
+const paintK=(x,y,z)=>[x,y,z].filter(v=>v===0||v===2).length;
+SCREENS.a=function(){
+  frame(true); HINTS=['Break the big cube into 27 small cubes and check each one.','Inner cubes have zero painted faces: no outside surface touches them.','A small cube is painted on a side only if that side was on the outside of the big cube.'];
+  const ph=PA.ph,layer=ph>=2&&ph<=4?[2,1,0][ph-2]:null,n=Object.keys(PA.seen).length; let text,sub,kind='';
+  if(ph===0){ text='Press the glowing orange “Dip in paint” button.'; sub='The wooden 3 × 3 × 3 cube will be painted on all of its outside faces.'; }
+  else if(ph===1){ text='Press the glowing purple “Cut into 27 cubes” button.'; sub='3 × 3 × 3 = 27 small cubes.'; }
+  else if(ph<=4){ text=`Tap each of the 9 cubes in the glowing ${LAYERNAME[layer]} layer.`; sub=PA.cur?`Last cube: ${KNAME[PA.seen[PA.cur]]} with ${PA.seen[PA.cur]} painted face${PA.seen[PA.cur]===1?'':'s'}.`:'Each tap shows how many faces of that small cube are painted.'; }
+  else { text='Tally done: 8 + 12 + 6 + 1 = 27 cubes.'; sub='12 cubes have exactly 2 painted faces: the middle cube on each of the 12 edges.'; kind='good'; }
+  const cell=(x,y,z)=>{ const id=x+','+y+','+z,s=PA.seen[id]; return `<button class="cell ${s!==undefined?'k'+s:''} ${PA.cur===id?'cur':''} ${layer===y&&s===undefined?'hl':''}" data-id="${id}">${s!==undefined?s:''}</button>`; };
+  const mid=ph>=2?`<div class="layers">${[2,1,0].map(y=>`<div class="pn ${layer===null||layer===y?'':'lock'}"><div class="pt">${LAYERNAME[y]} layer</div><div class="cellgrid">${[0,1,2].map(z=>[0,1,2].map(x=>cell(x,y,z)).join('')).join('')}</div></div>`).join('')}</div>
+     <div class="pn" style="margin-top:20px;height:230px"><div class="pt">🎨 Key</div><div><span class="chip" style="background:#ffb199">3 = corner</span><span class="chip" style="background:#ffe08a">2 = edge</span><span class="chip" style="background:#cdeeff">1 = face-centre</span><span class="chip" style="background:#e6e6f2">0 = middle</span></div><div class="note" style="margin-top:8px">The number on a cube = how many of its faces are painted. In each layer, the back row is at the top.</div></div>`
+     :`<div class="pn" style="height:100%;display:flex;align-items:center;justify-content:center;text-align:center;font-size:34px;line-height:46px;color:var(--ink2)">${ph===0?'The cube is bare wood.<br>Paint it first!':'The cube is painted red.<br>Now cut it into small cubes!'}</div>`;
+  $('#work').innerHTML=`<div class="m5a"><div class="pn col" style="gap:14px"><div class="vb" id="pa3" style="height:420px"></div>
+     <button class="btn orange ${ph===0?'hl':'lock'}" id="dip">🎨 Dip in paint</button><button class="btn purple ${ph===1?'hl':'lock'}" id="cut">✂️ Cut into 27 cubes</button></div><div style="min-width:0">${mid}</div>
+     <div class="pn col" style="gap:10px"><div class="pt" style="margin:0">🔬 Inspector</div><div class="vb" id="pam" style="height:220px"></div>
+       <table class="t"><tr><th>Painted faces</th><th>Cubes</th></tr>${[3,2,1,0].map(k=>`<tr class="${k===2?'hl2':''}"><td>${k}</td><td>${Object.values(PA.seen).filter(v=>v===k).length}</td></tr>`).join('')}<tr><th>Total</th><th>${n} / 27</th></tr></table></div></div>`;
+  new Viewer($('#pa3'),{mesh:()=>boxMesh(1.7,1.7,1.7),store:PA.view,opts:()=>({size:84,color:ph===0?[222,184,135]:[255,93,93]})});
+  const cube=boxMesh(1.5,1.5,1.5); let pf=[0,0,0,0,0,0]; if(PA.cur){ const [x,y,z]=PA.cur.split(',').map(Number); pf=[z===2,z===0,x===0,x===2,y===2,y===0];
+    if(PA.turnFor!==PA.cur){ PA.turnFor=PA.cur; // turn the inspector so every painted face of this cube faces the child
+      const nx=(x===2)-(x===0),ny=(y===2)-(y===0),nz=(z===2)-(z===0),h=Math.hypot(nx,nz);
+      if(nx||ny||nz){ const ry=(h?Math.atan2(-nx,nz):0)+.45; let up=Math.atan2(ny,h); if(!ny) up=.35; up=Math.max(-1.1,Math.min(1.1,up)); PA.view2.ry=ry; PA.view2.rx=-up; } else { PA.view2.ry=.6; PA.view2.rx=-.5; } } }
+  new Viewer($('#pam'),{mesh:()=>cube,store:PA.view2,opts:()=>({size:68,faceFill:i=>PA.cur?(pf[i]?[255,93,93]:[222,184,135]):[222,184,135]})});
+  $('#dip').onclick=()=>{ if(PA.ph!==0) return; PA.ph=1; beep('ok'); SCREENS.a(); fb('Painted! Only the outside faces of the big cube got paint.','good'); };
+  $('#cut').onclick=()=>{ if(PA.ph!==1) return; PA.ph=2; beep('ok'); SCREENS.a(); fb('Cut into 27 small cubes: 3 layers of 9.','good'); };
+  $$('.cell').forEach(b=>b.onclick=()=>{ const id=b.dataset.id,[x,y,z]=id.split(',').map(Number); if(layer===null||y!==layer||PA.seen[id]!==undefined) return; const k=paintK(x,y,z); PA.seen[id]=k; PA.cur=id; beep('pop');
+    if([0,1,2].every(zz=>[0,1,2].every(xx=>PA.seen[xx+','+layer+','+zz]!==undefined))){ PA.ph++; beep('ok'); }
+    SCREENS.a(); fb(`This is ${KNAME[k]}: ${k} painted face${k===1?'':'s'}.`,'info'); if(PA.ph===5&&!S.done.a) finish('a','sa',50,'Painted-cube expert! +50 🪙','Exactly 2 painted faces: <b>12 cubes</b>. Corners have 3 (8 cubes), face-centres 1 (6 cubes), and the middle cube 0. 8 + 12 + 6 + 1 = 27.'); });
+  setFoot({});
+  guide({p1:'Class C2',p2:ph===5?'Done! ✓':`Step ${ph+1} of 5`,done:ph===5,text,sub,kind});
+  coach('a',['Welcome to the Master Challenge: 4 stations!','Station A: Painter Pip paints a big cube and cuts it into 27.','You will inspect every small cube, one layer at a time.'],()=>{ armIdle(1500); if(G.text) Voice.speak(G.text); });
+};
+
+/* =====================================================================
+   STATION B — CRATE LAB (0 faces, 1 edges, 2 vertices, 3 press +, 4 to 6 sides, 5 back to target)
+   ===================================================================== */
+const SB={ph:0,marks:{f:new Set(),e:new Set(),v:new Set()},n:3,tried:{3:[4,6,4]},view:{rx:-.5,ry:.7},view2:{rx:-.45,ry:.7},ok:false};
+const SBPYR=pyramidMesh(4,1.05,1.7);
+SCREENS.b=function(){
+  frame(true); HINTS=['A face is a flat surface, an edge is where two faces meet, a vertex is a corner.','Tap each one only once. Use the turn buttons to see the back and the bottom.','Watch the table: what changes when the base gets one more side?'];
+  const ph=SB.ph,modeK=['f','e','v'][Math.min(ph,2)],names=['faces','edges','vertices'],one=['face','edge','vertex'],what=['a flat surface','where two faces meet','a corner'];
+  const tot=ph<3?SBPYR[modeK].length:0; let text,sub,kind='';
+  if(ph<3){ const mk=SB.marks[modeK]; text=`Tap every ${one[ph]} of the pyramid, once each.`; sub=`A ${one[ph]} is ${what[ph]}. Found: ${mk.size}. ${ph===0?'One face is underneath: use “Bottom view”.':'Use the turn buttons to reach hidden ones.'}`; }
+  else if(ph===3){ text='Press the glowing + button to add a side to the base.'; sub='Watch how the faces, edges and vertices change.'; }
+  else if(ph===4){ text='Keep pressing + until the base has 6 sides.'; sub='Each press adds a new row to the table.'; }
+  else if(!SB.ok){ text='Press − to make the crate Dan needs: 5, 8, 5.'; sub='Use the table: which base gives 5 faces, 8 edges and 5 vertices?'; }
+  else { text='Crate found: a square-based pyramid! Press “Next”.'; sub='A square (4-sided) base gives 5 faces, 8 edges and 5 vertices.'; kind='good'; }
+  let L,R;
+  if(ph<3){ const mk=SB.marks[modeK];
+    L=`<div class="pn col" style="gap:12px"><div class="vb hl" id="sbv" style="height:610px"></div>${ROTBTNS}</div>`;
+    R=`<div class="pn col" style="gap:14px"><div class="pt" style="margin:0">What are you counting?</div><div style="white-space:nowrap">${[0,1,2].map(i=>`<span class="chip ${i===ph?'now':(i<ph?'ok':'')}" style="font-size:28px">${i<ph?'✅':(i===ph?'👉':'⏳')} ${names[i]}</span>`).join('')}</div>
+      <div style="font-size:32px;line-height:40px;font-weight:700">Found so far: ${mk.size}</div>
+      <div class="pn" style="height:150px;font-size:28px;line-height:33px">A <b>${one[ph]}</b> is ${what[ph]}.<br>${ph===0?'Tapped faces turn green.':ph===1?'Tapped edges turn thick green.':'Tapped corners turn orange.'}</div>
+      <div class="pt" style="margin:0">📊 Square pyramid counts</div><table class="t"><tr><th>Faces</th><th>Edges</th><th>Vertices</th></tr><tr>${['f','e','v'].map((m,i)=>`<td>${i<ph?SBPYR[m].length:'?'}</td>`).join('')}</tr></table></div>`; }
+  else { const M=pyramidMesh(SB.n,1.05,1.7),F=M.f.length,E=M.e.length,V=M.v.length; SB.tried[SB.n]=[F,E,V];
+    L=`<div class="pn col" style="gap:14px"><div class="vb" id="sbv" style="height:560px"></div><div style="display:flex;gap:24px;align-items:center;justify-content:center;font-size:32px;font-weight:700;white-space:nowrap"><button class="btn purple big ${ph===5&&!SB.ok?'hl':'lock'}" id="mn" style="padding:6px 40px">−</button><span>Base sides: <span style="color:var(--orange-d)">${SB.n}</span></span><button class="btn purple big ${(ph===3||ph===4)?'hl':'lock'}" id="pl" style="padding:6px 40px">+</button></div></div>`;
+    R=`<div class="pn col" style="gap:12px"><div class="pt" style="margin:0">🎯 Dan’s crate</div><div style="white-space:nowrap"><span class="chip ${F===5?'ok':''}">Faces 5 ${F===5?'✅':''}</span><span class="chip ${E===8?'ok':''}">Edges 8 ${E===8?'✅':''}</span><span class="chip ${V===5?'ok':''}">Vertices 5 ${V===5?'✅':''}</span></div>
+      <div style="font-size:28px;line-height:34px;white-space:nowrap">Your pyramid: <b>${F}</b> faces, <b>${E}</b> edges, <b>${V}</b> vertices.</div>
+      <div class="pt" style="margin:0">📊 Pyramids you built</div><table class="t"><tr><th>Base sides</th><th>Faces</th><th>Edges</th><th>Vertices</th></tr>${Object.keys(SB.tried).sort((a,b)=>a-b).map(k=>`<tr class="${+k===SB.n?'hl2':''}"><td>${k}</td><td>${SB.tried[k][0]}</td><td>${SB.tried[k][1]}</td><td>${SB.tried[k][2]}</td></tr>`).join('')}</table>
+      <div class="note" style="font-size:28px;line-height:30px;height:62px">${Object.keys(SB.tried).length>=4?'Pattern: faces = base sides + 1 • edges = 2 × base sides • vertices = base sides + 1':''}</div></div>`; }
+  $('#work').innerHTML=`<div class="m5b">${L}${R}</div>`;
+  const v=new Viewer($('#sbv'),{mesh:ph<3?()=>SBPYR:()=>pyramidMesh(SB.n,1.05,1.7),store:ph<3?SB.view:SB.view2,
+    onTap:ph<3?(t,i)=>{ if(t!==modeK) return; const mm=SB.marks[modeK]; if(mm.has(i)) return; mm.add(i); beep('pop');
+      if(mm.size===tot){ SB.ph++; beep('ok'); SCREENS.b(); fb(`All found: the square pyramid has ${tot} ${names[ph]}.`,'good'); } else { v.draw(); SCREENS.b(); } }:null,
+    opts:()=>ph<3?({size:90,color:[143,107,255],see:ph>0,edges:ph>0,verts:ph===2,tapF:ph===0,tapE:ph===1,tapV:ph===2,markE:SB.marks.e,markV:SB.marks.v,faceFill:i=>ph===0&&SB.marks.f.has(i)?[110,230,170]:null}):({size:92,color:[143,107,255],see:true,edges:true,verts:true})});
+  if(ph<3) hookRot(v,$('#work'));
+  else { $('#pl').onclick=()=>{ if(!(SB.ph===3||SB.ph===4)||SB.n>=8) return; SB.n++; beep('pop'); SB.ph=SB.n>=6?5:4; SCREENS.b(); };
+    $('#mn').onclick=()=>{ if(SB.ph!==5||SB.ok||SB.n<=3) return; SB.n--; beep('pop'); const M=pyramidMesh(SB.n,1.05,1.7); if(M.f.length===5&&M.e.length===8&&M.v.length===5){ SB.ok=true; SCREENS.b(); finish('b','sb',50,'Crate found! +50 🪙','A pyramid with a <b>square (4-sided) base</b> has <b>5 faces, 8 edges and 5 vertices</b>.'); } else SCREENS.b(); }; }
+  setFoot({});
+  guide({p1:'Class C2',p2:SB.ok?'Done! ✓':`Step ${ph+1} of 6`,done:SB.ok,text,sub,kind});
+  coach('b',['Station B: Depot Dan needs a special crate.','First, count the faces, edges and vertices of a pyramid.','Then build new pyramids with a dial and compare them.'],()=>{ armIdle(1500); if(G.text) Voice.speak(G.text); });
+};
+
+/* =====================================================================
+   STATION C — CAKE SLICER (flat cuts at 25/50/75%, compare, upright, slanted)
+   ===================================================================== */
+const SC={ph:0,pos:50,log:[]},SCT=[25,50,75];
+SCREENS.c=function(){
+  frame(true); HINTS=['A flat cut parallel to the base stays the same distance from the base everywhere.','Compare the width of the cut face with the width of the base.','The shape of a cross-section depends on the direction of the cut.'];
+  const ph=SC.ph,dir=ph<=3?'flat':(ph===4?'up':'slant'); let text,sub='',kind='';
+  if(ph<=2){ text=`Drag the height slider to ${SCT[ph]}%. Then press “Cut!”.`; sub=ph===0?'A flat cut is parallel to the base (the plate).':'Same flat cut at a new height. Does the cut face change?'; }
+  else if(ph===3){ text='Compare your 3 cuts in the log. Then press the yellow button.'; sub='All 3 flat cuts gave a circle as wide as the base.'; kind='good'; }
+  else if(ph===4){ text='Press the glowing “Upright cut”, then “Cut!”.'; sub='This cut goes straight down through the middle.'; }
+  else if(ph===5){ text='Press the glowing “Slanted cut”, then “Cut!”.'; sub='This cut is tilted.'; }
+  else { text='The cut direction decides the shape! Press “Next”.'; sub='Flat cut: circle. Upright cut: rectangle. Slanted cut: ellipse.'; kind='good'; }
+  const top=60,bot=290,y=top+(bot-top)*SC.pos/100,picked=SC.picked===ph;
+  const cutSvg=dir==='flat'?`<ellipse cx="210" cy="${y}" rx="104" ry="32" fill="#3ea6ff" fill-opacity=".45" stroke="#1d7fd6" stroke-width="3" stroke-dasharray="7 5"/>`:dir==='up'?`<rect x="110" y="${top}" width="200" height="${bot-top}" fill="#3ea6ff" fill-opacity=".4" stroke="#1d7fd6" stroke-width="3" stroke-dasharray="7 5"/>`:`<ellipse cx="210" cy="175" rx="114" ry="32" transform="rotate(30 210 175)" fill="#3ea6ff" fill-opacity=".45" stroke="#1d7fd6" stroke-width="3" stroke-dasharray="7 5"/>`;
+  const showPlane=ph<=3||picked||ph===6;
+  const last=SC.log[SC.log.length-1], lastDir=last?last[2]:null;
+  const res=lastDir==='flat'?`<circle cx="100" cy="85" r="50" fill="#3ea6ff" stroke="#2b2d42" stroke-width="3"/>`:lastDir==='up'?`<rect x="50" y="28" width="100" height="115" fill="#3ccf91" stroke="#2b2d42" stroke-width="3"/>`:lastDir==='slant'?`<ellipse cx="100" cy="85" rx="64" ry="50" fill="#ff8a3d" stroke="#2b2d42" stroke-width="3"/>`:'';
+  const flatPh=ph<=2,canCut=flatPh?SC.pos===SCT[ph]:((ph===4||ph===5)&&picked);
+  $('#work').innerHTML=`<div class="m5c"><div class="col"><div class="pn" style="height:494px;padding:6px"><svg viewBox="0 20 420 350" style="width:100%;height:100%"><path d="M110 ${top} V${bot} A100 30 0 0 0 310 ${bot} V${top} Z" fill="#ffd9a8" stroke="#2b2d42" stroke-width="3"/><ellipse cx="210" cy="${top}" rx="100" ry="30" fill="#ffe9c9" stroke="#2b2d42" stroke-width="3"/>${showPlane?cutSvg:''}<text x="210" y="356" text-anchor="middle" font-size="15" fill="#5b5f7a" font-weight="600">🍰 Cylinder cake • blue = where the knife cuts</text></svg></div>
+      <div class="pn ${flatPh&&!canCut?'hl':(flatPh?'':'lock')}" style="height:150px;padding:8px 18px"><div style="font-size:28px;line-height:34px;font-weight:600;white-space:nowrap">↕ Height of the flat cut: <b>${SC.pos}%</b> from the top${flatPh?` <span style="color:var(--orange-d)">• target ${SCT[ph]}%</span>`:''}</div><input type="range" id="cp" min="10" max="90" step="5" value="${SC.pos}" ${flatPh?'':'disabled'}><div class="note" style="display:flex;justify-content:space-between"><span>10% (near the top)</span><span>90% (near the plate)</span></div></div></div>
+    <div class="col">
+     <div class="pn" style="height:208px"><div class="pt">🔪 Cut direction</div><div class="row2" style="flex-wrap:nowrap"><button class="btn orange ${ph<=3?'':'lock'}" style="${dir==='flat'?'':'opacity:.5'}">➖ Flat</button><button class="btn orange ${ph===4&&!picked?'hl':(ph===4?'':'lock')}" id="dUp">⬇️ Upright</button><button class="btn orange ${ph===5&&!picked?'hl':(ph===5?'':'lock')}" id="dSl">↘️ Slanted</button></div>
+       ${ph===3?'<button class="btn yellow big hl" id="c3" style="width:100%;margin-top:16px">I compared them ➜</button>':`<button class="btn green big ${canCut&&ph<6?'hl':'lock'}" id="cutb" style="width:100%;margin-top:16px">✂️ Cut!</button>`}</div>
+     <div class="pn" style="height:176px;display:flex;gap:16px;align-items:center"><svg viewBox="0 0 200 170" style="width:170px;height:140px;flex:none">${res}</svg><div style="font-size:28px;line-height:34px;min-width:0"><b>Cut face (cross-section)</b><br>${last?`<span style="font-size:32px;line-height:42px">${last[1]}</span><br><span class="note">${lastDir==='flat'?'as wide as the base':lastDir==='up'?'base width × cake height':'longer than the base is wide'}</span>`:'<span class="note">Make a cut to see it.</span>'}</div></div>
+     <div class="pn" style="flex:1"><div class="pt">📒 Cut log</div><table class="t"><tr><th>#</th><th>Cut</th><th>Cut face</th></tr>${SC.log.slice(-3).map((r,k)=>{ const i=SC.log.length-Math.min(3,SC.log.length)+k; return `<tr><td>${i+1}</td><td>${r[0]}</td><td>${r[1]}</td></tr>`; }).join('')||'<tr><td colspan="3" class="note">No cuts yet</td></tr>'}</table></div></div></div>`;
+  const cp=$('#cp'); if(cp) cp.oninput=e=>{ SC.pos=+e.target.value; SCREENS.c(); };
+  const dUp=$('#dUp'),dSl=$('#dSl'); dUp.onclick=()=>{ if(SC.ph!==4) return; SC.picked=4; beep('pop'); SCREENS.c(); }; dSl.onclick=()=>{ if(SC.ph!==5) return; SC.picked=5; beep('pop'); SCREENS.c(); };
+  const c3=$('#c3'); if(c3) c3.onclick=()=>{ SC.ph=4; beep('ok'); SCREENS.c(); };
+  const cb=$('#cutb'); if(cb) cb.onclick=()=>{ if(!canCut||SC.ph>=6) return; const rn=dir==='flat'?'Circle':dir==='up'?'Rectangle':'Ellipse',lab=dir==='flat'?`Flat, ${SC.pos}% down`:dir==='up'?'Upright, middle':'Slanted';
+    SC.log.push([lab,rn,dir]); beep('ok'); SC.ph=ph===2?3:ph+1; if(SC.ph<3) SC.pos=50;
+    SCREENS.c(); fb(`Cut face: a ${rn.toLowerCase()}.`,'good'); if(SC.ph===6) finish('c','sc',50,'Slicer master! +50 🪙','A flat cut parallel to the base always gives a <b>circle</b>, at any height. An upright cut gives a <b>rectangle</b>. A slanted cut gives an <b>ellipse</b>.'); };
+  setFoot({});
+  guide({p1:'Class Cc',p2:ph===6?'Done! ✓':`Step ${ph+1} of 6`,done:ph===6,text,sub,kind,target:flatPh&&!canCut?'#cp':null,dragTo:flatPh?SCT[ph]:null});
+  coach('c',['Station C: Baker Bo is slicing a cylinder cake.','The flat surface made by a cut is called a cross-section.','You will test cuts in three different directions.'],()=>{ armIdle(1500); if(G.text) Voice.speak(G.text); });
+};
+
+/* =====================================================================
+   STATION D — TUNNEL BOX
+   ===================================================================== */
+const SD={removed:[],view:{rx:-.5,ry:.7}};
+const SDN=['Front','Back','Left','Right','Top','Bottom'],SDPAIR={0:1,1:0,2:3,3:2,4:5,5:4};
+SCREENS.d=function(){
+  frame(true); HINTS=['A cube has 3 opposite pairs: top–bottom, front–back, left–right.','Opposite faces never touch each other.','Faces left = 6 − faces removed.'];
+  const r=SD.removed,done=r.length===2&&SDPAIR[r[0]]===r[1]; let text,sub='',kind='',step;
+  if(done){ text='A tunnel! 6 − 2 = 4 faces left. Press “Finish”.'; sub=`${SDN[r[0]]} and ${SDN[r[1]]} are opposite, so both ends are open.`; kind='good'; step=3; }
+  else if(r.length===0){ text='Tap the glowing “Top” button to remove the top face.'; sub='You can also tap the top face on the cube.'; step=1; }
+  else if(r.length===1&&r[0]===4){ text='Which face is opposite to Top? Remove that face too.'; sub='Opposite faces never touch. Use “Bottom view” to look underneath.'; step=2; }
+  else if(r.length===2){ text=`${SDN[r[0]]} and ${SDN[r[1]]} are not opposite. Put one back.`; sub='They share an edge, so the opening is a corner, not a tunnel.'; kind='try'; step=2; }
+  else { text='Keep only Top removed: tap the other removed faces back.'; sub='Removed faces show as dashed outlines.'; kind='try'; step=2; }
+  const first=r.length===0;
+  $('#work').innerHTML=`<div class="m5d"><div class="pn col" style="gap:12px"><div class="vb" id="dv" style="height:610px"></div>${ROTBTNS}</div>
+   <div class="col"><div class="pn ${!first&&!done?'hl':''}" style="height:236px"><div class="pt">🧱 Faces: tap to remove or put back</div><div class="row2">${SDN.map((n,i)=>`<button class="btn ${r.includes(i)?'ghost':''} ${first&&i===4?'hl':''} ${done||(first&&i!==4)?'lock':''}" data-f="${i}" style="width:318px;font-size:28px">${r.includes(i)?'↩ '+n+' (off)':'🟦 '+n}</button>`).join('')}</div></div>
+    <div class="pn" style="height:128px"><div style="font-size:38px;line-height:48px;font-weight:700">Faces left: <span style="color:var(--orange-d)">${6-r.length}</span></div><div class="note" style="font-size:28px;line-height:32px">6 faces − ${r.length} removed = ${6-r.length}</div></div>
+    <div class="pn" style="height:150px"><div class="pt">👯 Opposite pairs (they never touch)</div><div style="white-space:nowrap">${[[4,5],[0,1],[2,3]].map(p=>`<span class="chip ${p.every(x=>r.includes(x))?'ok':''}">${SDN[p[0]]} ↔ ${SDN[p[1]]}</span>`).join('')}</div></div></div></div>`;
+  const tog=i=>{ if(done) return; if(first&&i!==4){ beep('no'); fb('Start with the Top face.','try'); return; } const k=SD.removed.indexOf(i); if(k>=0) SD.removed.splice(k,1); else SD.removed.push(i); beep('pop'); SCREENS.d();
+    const rr=SD.removed; if(rr.length===2&&SDPAIR[rr[0]]===rr[1]&&!S.done.d) finish('d','sd',50,'Tunnel built! +50 🪙','Removing one pair of opposite faces from 6 faces leaves <b>4 faces</b>: a square tube, open at both ends.'); };
+  const cube=boxMesh(1.9,1.9,1.9);
+  const v=new Viewer($('#dv'),{mesh:()=>cube,store:SD.view,onTap:(t,i)=>{ if(t==='f') tog(i); },opts:()=>({size:90,color:[62,166,255],tapF:true,hidden:new Set(SD.removed),ghost:true,faceFill:i=>[[255,138,61],[255,210,63],[60,207,145],[143,107,255],[255,111,165],[62,166,255]][i]})});
+  hookRot(v,$('#work')); $$('[data-f]').forEach(b=>b.onclick=()=>tog(+b.dataset.f));
+  setFoot({});
+  guide({p1:'Class Cc',p2:done?'Done! ✓':`Step ${step} of 3`,done,text,sub,kind,target:first?'[data-f="4"]':null});
+  coach('d',['Station D: Box-maker Rae needs a tunnel box.','A cube has 6 faces. They come in 3 opposite pairs.','You will remove 2 faces and count what is left.'],()=>{ armIdle(1500); if(G.text) Voice.speak(G.text); });
+};
+
+/* =====================================================================
+   END
+   ===================================================================== */
+SCREENS.end=function(){
+  frame(false); updateProg();
+  $('#work').innerHTML=`<div class="center"><div class="homerow"><div class="tbig">${TARA_FULL}</div><div style="text-align:left"><h1>The Toy Fair<br>is <span>open!</span></h1><p class="lead" style="width:900px;margin-top:10px">Great building! You have <b>${S.coins} coins</b>.</p></div></div>
+   <div class="learn"><div><b>📄 2D vs 3D</b>Flat = no height. Solid = has height. Turn it side-on to check.</div><div><b>➖ Subtraction</b>Blocks left = total blocks − overlapping blocks.</div><div><b>🔺 Triangles</b>A triangle splits into 4. A group is a triangle when its outline has 3 sides.</div><div><b>📝 Sequencing</b>List → picture → cross out and calculate.</div>
+   <div><b>🎨 Painted cube</b>8 corners (3), 12 edges (2), 6 face-centres (1), 1 middle (0).</div><div><b>📦 Pyramid</b>A square base gives 5 faces, 8 edges and 5 vertices.</div><div><b>🍰 Cross-section</b>A flat cut of a cylinder, parallel to its base, is a circle.</div><div><b>🕳️ Tunnel box</b>Remove 1 opposite pair from 6 faces: 4 faces left.</div></div>
+   <button class="btn orange big" id="again">↺ Play again</button></div>`;
+  setFoot({hint:false}); $('#again').onclick=()=>location.reload();
+  setTimeout(()=>Coach.play(['You did it! The Toy Fair is open!','You sorted, subtracted, split, planned, counted and cut shapes.','You are a real Shape Town builder!'],null),400);
+};
+
+/* =====================================================================
+   TOP-BAR TOOLS + START
+   ===================================================================== */
+$('#bSnd').onclick=()=>{ S.sfx=!S.sfx; $('#bSnd').classList.toggle('off',!S.sfx); $('#bSnd').textContent=S.sfx?'🔊 Sound on':'🔇 Sound off'; };
+$('#bHelp').onclick=()=>modal({icon:'',title:'How to play',ok:'Got it',msg:'<ul style="margin:0;padding-left:34px"><li>The top bar says what to do now. Tara reads it aloud.</li><li>The glowing thing is what to touch. Grey things are locked.</li><li>Press Hint and the hand shows the move.</li><li>Finish a task to earn a badge.</li></ul>'});
+/* CT-416: buttons carry text only. Emoji belong to the design, never to controls. */
+const EMO=/[\u{1F000}-\u{1FAFF}\u{2600}-\u{27BF}\u{2B00}-\u{2BFF}\u{FE0F}\u{200D}]/gu;
+function cleanBtns(root){ root.querySelectorAll('button').forEach(b=>{ b.querySelectorAll('.ic').forEach(x=>x.remove()); const w=document.createTreeWalker(b,NodeFilter.SHOW_TEXT); let t; while((t=w.nextNode())){ const v=t.nodeValue.replace(EMO,''); if(v!==t.nodeValue) t.nodeValue=v.replace(/^\s+/,''); } }); }
+/* icons and emoji stay in the interface (design choice) */
+addEventListener('keydown',e=>{ if(e.key==='Escape'){ if(Coach.act) Coach.leave(); else if(modalOpen()){ const o=$('#mOk'); if(o) o.click(); } } });
+
+/* =====================================================================
+   LAYOUT AUDIT (developer check: nothing may overlap, spill or be clipped)
+   ===================================================================== */
+window.__audit=function(){
+  STG.classList.add('audit'); const issues=[], sr=STG.getBoundingClientRect(), k=scale;
+  const vis=e=>{ const cs=getComputedStyle(e); if(cs.display==='none'||cs.visibility==='hidden'||+cs.opacity===0) return false; return e.getClientRects().length>0; };
+  const roots=['#hdr','#ins','#work','#foot'].map(s=>$(s)).filter(e=>e&&vis(e)); if($('#modal').classList.contains('show')){ roots.length=0; roots.push($('#modalBox')); }
+  const name=e=>(e.id?'#'+e.id:e.tagName.toLowerCase()+(e.className&&typeof e.className==='string'?'.'+e.className.trim().split(/\s+/).join('.'):''))+' "'+(e.textContent||'').trim().slice(0,30)+'"';
+  const all=[]; roots.forEach(r=>{ all.push(r); r.querySelectorAll('*').forEach(e=>all.push(e)); });
+  // 1) overflow (HTML boxes)
+  all.forEach(e=>{ if(e.closest('svg')||e.tagName==='INPUT'||!vis(e)) return; if(e.scrollWidth>e.clientWidth+1&&e.clientWidth>0) issues.push('overflow-x '+name(e)+' '+e.scrollWidth+'>'+e.clientWidth); if(e.scrollHeight>e.clientHeight+1&&e.clientHeight>0) issues.push('overflow-y '+name(e)+' '+e.scrollHeight+'>'+e.clientHeight); });
+  // 2) leaf boxes overlapping each other (text, buttons, inputs, svg text)
+  const leaves=all.filter(e=>{ if(!vis(e)) return false; if(e.tagName==='text') return true; if(e.closest('svg')) return false; if(['BUTTON','INPUT'].includes(e.tagName)) return true; return [...e.childNodes].some(n=>n.nodeType===3&&n.textContent.trim()); }).map(e=>({e,r:e.getBoundingClientRect()}));
+  for(let i=0;i<leaves.length;i++) for(let j=i+1;j<leaves.length;j++){ const a=leaves[i],b=leaves[j]; if(a.e.contains(b.e)||b.e.contains(a.e)) continue;
+    const ox=Math.min(a.r.right,b.r.right)-Math.max(a.r.left,b.r.left), oy=Math.min(a.r.bottom,b.r.bottom)-Math.max(a.r.top,b.r.top); if(ox>2&&oy>2) issues.push('overlap '+name(a.e)+' X '+name(b.e)); }
+  // 3) outside the stage or clipped by a panel
+  leaves.forEach(({e,r})=>{ if(r.left<sr.left-1||r.right>sr.right+1||r.top<sr.top-1||r.bottom>sr.bottom+1) issues.push('off-stage '+name(e));
+    let p=e.parentElement; while(p&&p!==STG){ const cs=getComputedStyle(p); if(cs.overflow!=='visible'){ const pr=p.getBoundingClientRect(); if(r.left<pr.left-1||r.right>pr.right+1||r.top<pr.top-1||r.bottom>pr.bottom+1){ issues.push('clipped '+name(e)+' by '+name(p)); } break; } p=p.parentElement; } });
+  STG.classList.remove('audit'); return [...new Set(issues)];
+};
+go('home');
+</script>
+</body>
+</html>
