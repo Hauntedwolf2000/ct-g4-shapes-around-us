@@ -418,7 +418,7 @@ const G={text:null,target:null};
 /* the five classes of the ASK (CT-102): Ci, C1, C2, Cc, Assessment. Assessment is not built yet. */
 const CLASSES=[['Ci','Introduction',['problem','story','m1'],'m1'],['C1','Class 1',['m2','m3'],'m3'],['C2','Class 2',['m4','a','b'],'b'],['Cc','Conclusion',['c','d'],'d']];
 function updateProg(){ const cur=CLASSES.findIndex(c=>c[2].includes(S.screen));
-  $('#prog').innerHTML=CLASSES.map((c,i)=>{ const dn=!!S.done[c[3]]; return `<span class="${i===cur?'on':(dn?'ok':'')}">${c[0]}${dn&&i!==cur?' done':''}</span>`; }).join('');
+  $('#prog').innerHTML=CLASSES.map((c,i)=>{ const dn=!!S.done[c[3]]; return `<span class="${i===cur?'on':(dn?'ok':'')}">${c[0]}${dn&&i!==cur?' ✓':''}</span>`; }).join('');
   $('#clsName').textContent=cur>=0?`Class ${CLASSES[cur][0]} · ${CLASSES[cur][1]}`:'Grade 4 · Chapter 1';
   const n=Object.keys(BADGES).filter(k=>S.done[k]).length; const el=$('#coinCount'); if(el&&el.textContent!==String(n)){ el.textContent=n; const bx=$('#badgeBox'); bx.classList.remove('pulse'); void bx.offsetWidth; bx.classList.add('pulse'); } }
 function frame(withIns){ STG.classList.toggle('noins',!withIns); }
