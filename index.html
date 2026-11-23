@@ -145,14 +145,14 @@ input[type=range]{width:100%;height:34px;margin:0;accent-color:var(--orange);dis
 .tpng{width:100%;height:100%;object-fit:contain;display:block}
 .tface{width:170px;height:170px;max-width:none;margin:4px 0 0 -33px;display:block}
 .homerow .tbig{width:300px;height:354px}
-#coach .who{position:absolute;left:0;bottom:0;width:360px;height:262px;overflow:hidden;transform:translateX(-130%);filter:drop-shadow(0 10px 14px rgba(0,0,0,.35))}
+#coach .who{position:absolute;left:0;bottom:0;width:360px;height:262px;overflow:hidden;filter:drop-shadow(0 10px 14px rgba(0,0,0,.35))}
 #coach .who img,#coach .who svg{width:440px;height:440px;max-width:none;margin-left:-60px;display:block}
-#coach.on .who{animation:sneak .6s ease-out forwards}
-#coach.on.idle .who{transform:none;animation:bob 3.2s ease-in-out infinite}
 
-@keyframes sneak{0%{transform:translateX(-130%) rotate(-8deg)}60%{transform:translateX(-20%) rotate(4deg)}100%{transform:none}}
 
-@keyframes bob{50%{transform:translateY(-8px)}}
+
+
+
+
 #stage.coaching .tools,#stage.coaching #foot>*{visibility:hidden}
 #coach .say:not(.show){display:none}
 #coach .say{position:absolute;left:400px;bottom:40px;width:max-content;min-width:760px;max-width:1330px;min-height:150px;background:#fff;border:6px solid #24405f;border-radius:36px;padding:20px 30px;display:flex;align-items:center;gap:24px;pointer-events:auto}
@@ -384,8 +384,8 @@ const Coach={act:false,r:null,tm:0,
     const r=document.createElement('div'); r.id='coach';
     r.innerHTML='<div class="shade"></div><div class="who">'+TARA_FULL+'</div><div class="say"><div class="nm">Tara the Builder</div><div class="tx"></div></div>';
     STG.appendChild(r); this.r=r; setInert(true); 
-    setTimeout(()=>{ if(this.r!==r) return; r.classList.add('on'); setTimeout(()=>{ if(this.r!==r) return; r.classList.add('idle'); r.querySelector('.tx').textContent=text; r.querySelector('.say').classList.add('show');
-      Voice.speak(text,()=>{ if(this.r===r) this.tm=setTimeout(()=>this.leave(),600); }); },650); },30); },
+    r.querySelector('.tx').textContent=text; r.querySelector('.say').classList.add('show');
+    Voice.speak(text,()=>{ if(this.r===r) this.tm=setTimeout(()=>this.leave(),600); }); },
   leave(){ if(!this.r) return; clearTimeout(this.tm); Voice.stop(); const r=this.r; this.r=null; r.remove(); this.act=false; setInert(false); const d=this.done; this.done=null; if(d) d(); },
   stop(){ clearTimeout(this.tm); if(this.r){ this.r.remove(); this.r=null; } if(this.act){ this.act=false; setInert(false); } } };
 function setInert(on){ ['#hdr','#ins','#work','#foot'].forEach(s=>{ const e=$(s); if(on) e.setAttribute('inert',''); else e.removeAttribute('inert'); }); STG.classList.toggle('coaching',!!on); }
