@@ -427,14 +427,14 @@ function guide(o){
   $('#ins').innerHTML='<div class="iface" id="iface"></div><div class="ibub" id="ibub"><div class="it1">'+o.text+'</div><div class="it2 '+(o.kind||'')+'">'+(o.sub||'')+'</div></div><div class="ipill '+(o.done?'done':'')+'"><div class="p1">'+(o.p1||'')+'</div><div class="p2">'+(o.p2||'')+'</div></div>';
   G.target=o.target||null; G.dragTo=o.dragTo!=null?o.dragTo:null;
   hideHand(); clearTimeout(idleT); /* a step change never leaves an old hand or hint behind */
-  if(o.text!==G.text){ G.text=o.text; fb(''); if(!Coach.act) Voice.speak(o.text); }
+  if(o.text!==G.text){ G.text=o.text; fb(''); }
   armIdle();
 }
 function fb(text,kind='info'){ const e=$('#fbx'); if(!e) return; if(!text){ e.className='fb'; e.innerHTML=''; return; }
   e.className='fb '+kind; e.innerHTML='<span class="fbt">'+text+'</span>'; }
 function setFoot({next=null,hint=true}){
   $('#foot').innerHTML=(hint?'<button class="btn yellow" id="fHint">💡 Hint</button>':'')+'<div class="fb" id="fbx"></div>'+(next?`<button class="btn orange big" id="fNext" ${next.on?'':'disabled'}>${next.label}</button>`:'');
-  if(hint) $('#fHint').onclick=()=>{ beep('pop'); fb('Do this: '+(G.hint||G.text||''),'info'); cue(); armIdle(12000); if(G.text) Voice.speak(G.hint||G.text); };
+  if(hint) $('#fHint').onclick=()=>{ beep('pop'); fb('Do this: '+(G.hint||G.text||''),'info'); cue(); armIdle(12000); };
   if(next){ $('#fNext').onclick=()=>{ if(!next.on) return; beep('pop'); next.fn(); }; if(next.on) $('#fNext').classList.add('pulse-btn'); } }
 let HINTS=[];
 const FLOW=['home','problem','story','m1','m2','m3','m4','a','b','c','d','end'];
@@ -518,7 +518,7 @@ SCREENS.problem=function(){
    <div style="display:grid;grid-template-columns:repeat(4,440px);gap:24px">${PROBLEMS.map((p,i)=>`<div class="pn" style="height:440px;text-align:left;border-style:solid;border-color:var(--orange);background:#fff"><div style="font-size:70px;line-height:84px">${PICO[i]}</div><div style="font-size:34px;line-height:42px;font-weight:700">${p.t}</div><div style="font-size:28px;line-height:36px;margin-top:6px;height:150px;overflow:hidden">${p.d}</div><div class="chip now" style="margin-top:6px;white-space:normal;font-size:28px;line-height:36px">${p.s}</div></div>`).join('')}</div></div>`;
   setFoot({next:{label:'Start the story',on:true,fn:()=>go('story')}});
   guide({p1:'Class Ci',p2:'The problem',text:'Read the 4 problems. Then press Start the story.',sub:'You will solve each one with a new shape skill.',target:'#fNext'});
-  coach('problem',['Oh no! The Toy Fair opens tomorrow and four jobs are broken.','You will fix them with shape skills.'],()=>{ armIdle(1500); if(G.text) Voice.speak(G.text); });
+  coach('problem',['Oh no! The Toy Fair opens tomorrow and four jobs are broken.','You will fix them with shape skills.'],()=>armIdle(1500));
 };
 
 /* =====================================================================
@@ -550,7 +550,7 @@ SCREENS.story=function(){
   $$('.choice').forEach(b=>b.onclick=()=>{ beep('pop'); ST.pick=+b.dataset.i; SCREENS.story(); });
   setFoot({next:ST.pick!==null?{label:ST.i<n-1?'Next place':'Start Mission 1',on:true,fn:()=>{ if(ST.i<n-1){ ST.i++; ST.pick=null; SCREENS.story(); } else { S.done.story=true; go('m1'); } }}:null});
   guide({p1:'Class Ci',p2:`Place ${ST.i+1} of ${n}`,text,sub,kind,target:ST.pick!==null?'#fNext':'.choices'});
-  coach('story',['I am Tara. Visit 4 places to see why shape skills matter.'],()=>{ armIdle(1500); if(G.text) Voice.speak(G.text); });
+  coach('story',['I am Tara. Visit 4 places to see why shape skills matter.'],()=>armIdle(1500));
 };
 
 /* =====================================================================
@@ -592,7 +592,7 @@ SCREENS.m1=function(){
   $('#b2').onclick=()=>sortTo(2); $('#b3').onclick=()=>sortTo(3);
   setFoot({});
   guide({p1:fin?'Class Ci':`Class Ci · shape ${M1.i+1} of 6`,p2:fin?'Done! ✓':`Step ${M1.ph+1} of 3`,done:fin,text,sub,kind,target:M1.ph===1?'.turnbox':(M1.ph===2?'#shelfRow':null),dragTo:90});
-  coach('m1',['Mission 1: the warehouse pile is mixed up.','Some shapes are flat cut-outs. Some are solid toys.','You will turn each shape side-on, then put it on the right shelf.'],()=>{ armIdle(1500); if(G.text) Voice.speak(G.text); });
+  coach('m1',['Mission 1: the warehouse pile is mixed up.','Some shapes are flat cut-outs. Some are solid toys.','You will turn each shape side-on, then put it on the right shelf.'],()=>armIdle(1500));
 };
 
 /* =====================================================================
@@ -647,7 +647,7 @@ SCREENS.m2=function(){
     setTimeout(()=>{ Object.assign(M2,{removed:[],locked:false,bx:2,by:3,horiz:true}); /* restart over the tower (2 overlap) so the next goal always needs a move */ M2.ph=2*gg+3; if(M2.ph<7&&4-m2Ov().length===M2T[gg+1]) M2.ph++; if(M2.ph>=7){ M2.ph=7; SCREENS.m2(); finish('m2','m2done',0,'Subtraction expert!','You placed the crane, found the overlap and subtracted: <b>blocks left = total − overlapping</b>.'); } else SCREENS.m2(); },1900); };
   setFoot({});
   guide({p1:'Class C1',p2:ph===7?'Done! ✓':`Step ${ph+1} of 7`,done:ph===7,text,sub,kind,target:ph%2===1&&ph<7?'[data-mv="1,0"]':null});
-  coach('m2',['Mission 2: Architect Leo’s tower has 4 blocks.','A crane removes every tower block it overlaps.','You will use coordinates to place the crane exactly.'],()=>{ armIdle(1500); if(G.text) Voice.speak(G.text); });
+  coach('m2',['Mission 2: Architect Leo’s tower has 4 blocks.','A crane removes every tower block it overlaps.','You will use coordinates to place the crane exactly.'],()=>armIdle(1500));
 };
 
 /* =====================================================================
@@ -695,7 +695,7 @@ SCREENS.m3=function(){
   $('#tclr').onclick=()=>{ if(!canClear) return; M3.sel=[]; M3.ph=10; beep('pop'); SCREENS.m3(); };
   setFoot({});
   guide({p1:'Class C1',p2:ph===12?'Done! ✓':`Step ${ph+1} of 12`,done:ph===12,text,sub,kind});
-  coach('m3',['Mission 3: the roof is one big triangle.','Master Maya cut it into smaller pieces.','You will find every triangle hiding inside it.'],()=>{ armIdle(1500); if(G.text) Voice.speak(G.text); });
+  coach('m3',['Mission 3: the roof is one big triangle.','Master Maya cut it into smaller pieces.','You will find every triangle hiding inside it.'],()=>armIdle(1500));
 };
 
 /* =====================================================================
@@ -732,7 +732,7 @@ SCREENS.m4=function(){
         M4.state[i]='okk'; beep('pop'); i++; SCREENS.m4(); setTimeout(nx,500); },800); }; nx(); };
   setFoot({});
   guide({p1:'Class C2',p2:M4.ok?'Done! ✓':`Step ${stp} of 3`,done:M4.ok,text,sub,kind,target:M4.fail?'.slot.bad':null});
-  coach('m4',['Mission 4: this robot follows a plan exactly, in order.','Each card says what it needs and what it gives.','Build a plan the robot can finish without getting stuck.'],()=>{ armIdle(1500); if(G.text) Voice.speak(G.text); });
+  coach('m4',['Mission 4: this robot follows a plan exactly, in order.','Each card says what it needs and what it gives.','Build a plan the robot can finish without getting stuck.'],()=>armIdle(1500));
 };
 
 /* =====================================================================
@@ -769,7 +769,7 @@ SCREENS.a=function(){
     SCREENS.a(); fb(`This is ${KNAME[k]}: ${k} painted face${k===1?'':'s'}.`,'info'); if(PA.ph===5&&!S.done.a) finish('a','sa',50,'Painted-cube expert! +50 🪙','Exactly 2 painted faces: <b>12 cubes</b>. Corners have 3 (8 cubes), face-centres 1 (6 cubes), and the middle cube 0. 8 + 12 + 6 + 1 = 27.'); });
   setFoot({});
   guide({p1:'Class C2',p2:ph===5?'Done! ✓':`Step ${ph+1} of 5`,done:ph===5,text,sub,kind});
-  coach('a',['Welcome to the Master Challenge: 4 stations!','Station A: Painter Pip paints a big cube and cuts it into 27.','You will inspect every small cube, one layer at a time.'],()=>{ armIdle(1500); if(G.text) Voice.speak(G.text); });
+  coach('a',['Welcome to the Master Challenge: 4 stations!','Station A: Painter Pip paints a big cube and cuts it into 27.','You will inspect every small cube, one layer at a time.'],()=>armIdle(1500));
 };
 
 /* =====================================================================
@@ -809,7 +809,7 @@ SCREENS.b=function(){
     $('#mn').onclick=()=>{ if(SB.ph!==5||SB.ok||SB.n<=3) return; SB.n--; beep('pop'); const M=pyramidMesh(SB.n,1.05,1.7); if(M.f.length===5&&M.e.length===8&&M.v.length===5){ SB.ok=true; SCREENS.b(); finish('b','sb',50,'Crate found! +50 🪙','A pyramid with a <b>square (4-sided) base</b> has <b>5 faces, 8 edges and 5 vertices</b>.'); } else SCREENS.b(); }; }
   setFoot({});
   guide({p1:'Class C2',p2:SB.ok?'Done! ✓':`Step ${ph+1} of 6`,done:SB.ok,text,sub,kind});
-  coach('b',['Station B: Depot Dan needs a special crate.','First, count the faces, edges and vertices of a pyramid.','Then build new pyramids with a dial and compare them.'],()=>{ armIdle(1500); if(G.text) Voice.speak(G.text); });
+  coach('b',['Station B: Depot Dan needs a special crate.','First, count the faces, edges and vertices of a pyramid.','Then build new pyramids with a dial and compare them.'],()=>armIdle(1500));
 };
 
 /* =====================================================================
@@ -845,7 +845,7 @@ SCREENS.c=function(){
     SCREENS.c(); fb(`Cut face: a ${rn.toLowerCase()}.`,'good'); if(SC.ph===6) finish('c','sc',50,'Slicer master! +50 🪙','A flat cut parallel to the base always gives a <b>circle</b>, at any height. An upright cut gives a <b>rectangle</b>. A slanted cut gives an <b>ellipse</b>.'); };
   setFoot({});
   guide({p1:'Class Cc',p2:ph===6?'Done! ✓':`Step ${ph+1} of 6`,done:ph===6,text,sub,kind,target:flatPh&&!canCut?'#cp':null,dragTo:flatPh?SCT[ph]:null});
-  coach('c',['Station C: Baker Bo is slicing a cylinder cake.','The flat surface made by a cut is called a cross-section.','You will test cuts in three different directions.'],()=>{ armIdle(1500); if(G.text) Voice.speak(G.text); });
+  coach('c',['Station C: Baker Bo is slicing a cylinder cake.','The flat surface made by a cut is called a cross-section.','You will test cuts in three different directions.'],()=>armIdle(1500));
 };
 
 /* =====================================================================
@@ -873,7 +873,7 @@ SCREENS.d=function(){
   hookRot(v,$('#work')); $$('[data-f]').forEach(b=>b.onclick=()=>tog(+b.dataset.f));
   setFoot({});
   guide({p1:'Class Cc',p2:done?'Done! ✓':`Step ${step} of 3`,done,text,sub,kind,target:first?'[data-f="4"]':null});
-  coach('d',['Station D: Box-maker Rae needs a tunnel box.','A cube has 6 faces. They come in 3 opposite pairs.','You will remove 2 faces and count what is left.'],()=>{ armIdle(1500); if(G.text) Voice.speak(G.text); });
+  coach('d',['Station D: Box-maker Rae needs a tunnel box.','A cube has 6 faces. They come in 3 opposite pairs.','You will remove 2 faces and count what is left.'],()=>armIdle(1500));
 };
 
 /* =====================================================================
@@ -893,7 +893,7 @@ SCREENS.end=function(){
    TOP-BAR TOOLS + START
    ===================================================================== */
 $('#bSnd').onclick=()=>{ S.sfx=!S.sfx; $('#bSnd').classList.toggle('off',!S.sfx); $('#bSnd').textContent=S.sfx?'🔊 Sound on':'🔇 Sound off'; };
-$('#bHelp').onclick=()=>modal({icon:'',title:'How to play',ok:'Got it',msg:'<ul style="margin:0;padding-left:34px"><li>The top bar says what to do now. Tara reads it aloud.</li><li>The glowing thing is what to touch. Grey things are locked.</li><li>Press Hint and the hand shows the move.</li><li>Finish a task to earn a badge.</li></ul>'});
+$('#bHelp').onclick=()=>modal({icon:'',title:'How to play',ok:'Got it',msg:'<ul style="margin:0;padding-left:34px"><li>The top bar says what to do now. Tara introduces each part.</li><li>The glowing thing is what to touch. Grey things are locked.</li><li>Press Hint and the hand shows the move.</li><li>Finish a task to earn a badge.</li></ul>'});
 /* CT-416: buttons carry text only. Emoji belong to the design, never to controls. */
 const EMO=/[\u{1F000}-\u{1FAFF}\u{2600}-\u{27BF}\u{2B00}-\u{2BFF}\u{FE0F}\u{200D}]/gu;
 function cleanBtns(root){ root.querySelectorAll('button').forEach(b=>{ b.querySelectorAll('.ic').forEach(x=>x.remove()); const w=document.createTreeWalker(b,NodeFilter.SHOW_TEXT); let t; while((t=w.nextNode())){ const v=t.nodeValue.replace(EMO,''); if(v!==t.nodeValue) t.nodeValue=v.replace(/^\s+/,''); } }); }
